@@ -4,7 +4,7 @@
 #include "Hourglass.h"
 #include "motors.h"
 #include "propulsion.h"
-#include <Servo.h>
+#include "Servo.h"
 
 /* P and I value for the PI controller. The values do not correspond to
    something human readable, just tweak them as needed by hand  */

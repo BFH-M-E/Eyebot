@@ -1,9 +1,10 @@
+#include "Eyebot.h"
+
 #include "battery.h"
 #include "definitions.h"
 #include "encoders.h"
 #include "motors.h"
 #include "propulsion.h"
-#include "Servo.h"
 
 void
 setup ()
