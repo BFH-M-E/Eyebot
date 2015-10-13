@@ -1,6 +1,7 @@
 #include "arduino.h"
 #include "definitions.h"
 #include "encoders.h"
+#include "Hourglass.h"
 #include "motors.h"
 #include "propulsion.h"
 #include <Servo.h>
@@ -49,45 +50,7 @@ int TailServoAngle = 0;
 
 Servo TailWheelServo;
 
-void
-InitTimer2Interrupts ()
-  {
-    /* Initialize timer2 to produce periodical interrupts. Use the longest
-       possible cycle duration (e.g. high prescale value, high compare match
-       value). This leads to approximately 61 Hz.
-
-    /* Prevent interrupts  */
-    cli();
-
-    /* Reset registers  */
-    TCCR2A = 0;
-    TCCR2B = 0;
-    TCNT2  = 0;
-
-    /* Set 8-bit compare match register  */
-    OCR2A = 255;  /* 16 MHz / (1024 (prescale) * 61 Hz) - 1  */
-
-    TCCR2A |= (1 << WGM21);   /* Enable CTC mode  */
-    /* Prescale by 1024  */
-    TCCR2B |= (1 << CS22) | (1 << CS21) | (1 << CS20);
-    TIMSK2 |= (1 << OCIE2A);  /* Enable timer compare interrupt  */
-
-    /* Resume interrupts  */
-    sei();
-  }
-
-void
-InitPropulsion ()
-  {
-    /* Initialize hardware  */
-    InitEncoders ();
-    InitMotors ();
-    InitTimer2Interrupts ();
-
-    TailWheelServo.attach (TailWheelServoPin);
-  }
-
-ISR (TIMER2_COMPA_vect)
+void ControlMotors ()
   {
     /* Resume interrupts  */
     sei();
@@ -150,6 +113,23 @@ ISR (TIMER2_COMPA_vect)
     /* Control motors  */
     SetPwmLeft (outputLeft / CompressionFactor);
     SetPwmRight (outputRight / CompressionFactor);
+  }
+
+void
+InitPropulsion ()
+  {
+    /* Initialize hardware  */
+    InitEncoders ();
+    InitMotors ();
+
+    /* Initialize Hourglass library in slow mode  */
+    Hourglass.Init (SLOW);
+
+    /* Register the ControlMotors function to be executed every other
+       Hourglass tick (e.g. every 20 ms -> at 50 Hz)  */
+    Hourglass.RegisterEvent (0, ControlMotors, 2);
+
+    TailWheelServo.attach (TailWheelServoPin);
   }
 
 void
