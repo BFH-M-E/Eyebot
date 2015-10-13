@@ -122,9 +122,6 @@ InitPropulsion ()
     InitEncoders ();
     InitMotors ();
 
-    /* Initialize Hourglass library in slow mode  */
-    Hourglass.Init (SLOW);
-
     /* Register the ControlMotors function to be executed every other
        Hourglass tick (e.g. every 20 ms -> at 50 Hz)  */
     Hourglass.RegisterEvent (0, ControlMotors, 2);

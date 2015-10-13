@@ -1,49 +1,33 @@
 #include "Eyebot.h"
 
-#include "battery.h"
-#include "definitions.h"
-#include "encoders.h"
-#include "motors.h"
-#include "propulsion.h"
-
 void
 setup ()
 {
-  /* Enable 5 V power supply  */
-  pinMode (TracoEnable, OUTPUT);
-  digitalWrite (TracoEnable, HIGH);
-
-  /* Initialize hardware drivers  */
-  InitPropulsion ();
-
-  Serial.begin (9600);
-
-  pinMode (Button1, INPUT);
-  pinMode (Button2, INPUT);
-  pinMode (Button3, INPUT);
+  Eyebot.Init ();
 }
 
 void
 loop ()
 {
-  if (GetBatteryVoltage () < 11.0f)
+  if (Eyebot.GetBatteryVoltage () < 11.0f)
     {
-      digitalWrite (TracoEnable, LOW);
+      Eyebot.SetTracoState (false);
       delay (1000);
     }
   else
     {
-      digitalWrite (TracoEnable, HIGH);
+      Eyebot.SetTracoState (true);
     }
 
-  SetForwardSpeed (0.05f);
+  Eyebot.SetForwardSpeed (0.05f);
 
-  if (digitalRead (Button1))
-    EnableMotors ();
-  if (digitalRead (Button2))
-    DisableMotors ();
+  if (Eyebot.GetButton (Button1))
+    Eyebot.SetMotorState (true);
 
-  SetTailWheelAngle (0);
+  if (Eyebot.GetButton (Button2))
+    Eyebot.SetMotorState (false);
+
+  Eyebot.SetTailWheelAngle (0);
 
   delay (100);
 }

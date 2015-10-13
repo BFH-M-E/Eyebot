@@ -25,19 +25,19 @@ void
 InitEncoders ()
   {
     /* Configure pins as inputs  */
-    pinMode (Encoder1A, INPUT);
-    pinMode (Encoder1B, INPUT);
-    pinMode (Encoder2A, INPUT);
-    pinMode (Encoder2B, INPUT);
+    pinMode (Encoder1APin, INPUT);
+    pinMode (Encoder1BPin, INPUT);
+    pinMode (Encoder2APin, INPUT);
+    pinMode (Encoder2BPin, INPUT);
 
     /* Configure interrupts  */
-    attachInterrupt (digitalPinToInterrupt (Encoder1A), IsrEncoderTick1A,
+    attachInterrupt (digitalPinToInterrupt (Encoder1APin), IsrEncoderTick1A,
         RISING);
-    attachInterrupt (digitalPinToInterrupt (Encoder1B), IsrEncoderTick1B,
+    attachInterrupt (digitalPinToInterrupt (Encoder1BPin), IsrEncoderTick1B,
         RISING);
-    attachInterrupt (digitalPinToInterrupt (Encoder2A), IsrEncoderTick2A,
+    attachInterrupt (digitalPinToInterrupt (Encoder2APin), IsrEncoderTick2A,
         RISING);
-    attachInterrupt (digitalPinToInterrupt (Encoder2B), IsrEncoderTick2B,
+    attachInterrupt (digitalPinToInterrupt (Encoder2BPin), IsrEncoderTick2B,
         RISING);
   }
 
@@ -87,7 +87,7 @@ IsrEncoderTick1A ()
     /* Operations can be treated as atomic since interrupt nesting is disabled
        by default  */
 
-    if (digitalRead (Encoder1B))
+    if (digitalRead (Encoder1BPin))
       TicksRight++;
     else
       TicksRight--;
@@ -99,7 +99,7 @@ IsrEncoderTick1B ()
     /* Operations can be treated as atomic since interrupt nesting is disabled
        by default  */
 
-    if (digitalRead (Encoder1A))
+    if (digitalRead (Encoder1APin))
       TicksRight--;
     else
       TicksRight++;
@@ -111,7 +111,7 @@ IsrEncoderTick2A ()
     /* Operations can be treated as atomic since interrupt nesting is disabled
        by default  */
 
-    if (digitalRead (Encoder2B))
+    if (digitalRead (Encoder2BPin))
       TicksLeft--;
     else
       TicksLeft++;
@@ -123,7 +123,7 @@ IsrEncoderTick2B ()
     /* Operations can be treated as atomic since interrupt nesting is disabled
        by default  */
 
-    if (digitalRead (Encoder2A))
+    if (digitalRead (Encoder2APin))
       TicksLeft++;
     else
       TicksLeft--;
