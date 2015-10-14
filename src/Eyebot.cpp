@@ -27,6 +27,9 @@ namespace BFH
         /* Initialize (the inlined) Hourglass library in slow mode  */
         ::Hourglass.Init ();
 
+        /* Initialize battery voltage estimation  */
+        BatteryVoltage = GetBatteryVoltage ();
+
         InitPropulsion ();
       }
 
@@ -151,13 +154,12 @@ namespace BFH
         float voltage = GetBatteryVoltage ();
 
         /* Low pass  */
-        static float filteredVoltage = 10.0f;
         float alpha = 0.3; /* Higher value leads to faster convergation  */
-        filteredVoltage *= (1 - alpha);
-        filteredVoltage += alpha * voltage;
+        BatteryVoltage *= (1 - alpha);
+        BatteryVoltage += alpha * voltage;
 
         /* Limit voltage  */
-        float result = filteredVoltage;
+        float result = BatteryVoltage;
         if (result > BatteryFullVoltage)
           result = BatteryFullVoltage;
         if (result < BatteryEmptyVoltage)

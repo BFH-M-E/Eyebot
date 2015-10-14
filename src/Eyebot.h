@@ -46,6 +46,8 @@ namespace BFH
 
         void SetForwardSpeed (float Speed);
         void SetTailWheelAngle (int AngleInDegree);
+      private:
+        float BatteryVoltage;
       };
   }
 
