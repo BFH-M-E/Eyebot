@@ -2,32 +2,55 @@
 
 void
 setup ()
-{
-  Eyebot.Init ();
-}
+  {
+    Eyebot.Init ();
+    Serial.begin (9600);
+  }
 
 void
 loop ()
-{
-  if (Eyebot.GetBatteryVoltage () < 11.0f)
-    {
-      Eyebot.SetTracoState (false);
-      delay (1000);
-    }
-  else
-    {
-      Eyebot.SetTracoState (true);
-    }
+  {
+    // Serial.println (Eyebot.GetBatteryVoltage ());
+    Serial.println (Eyebot.GetBatteryPercent ());
+    delay (1000);
 
-  Eyebot.SetForwardSpeed (0.05f);
+    /* Enable Traco */
+    Eyebot.SetTracoState (true);
+    delay (200);
 
-  if (Eyebot.GetButton (Button1))
+    /* Enable power switch  */
     Eyebot.SetMotorState (true);
 
-  if (Eyebot.GetButton (Button2))
+    /* Drive forwards  */
+    Eyebot.SetForwardSpeed (0.10f);
+    delay (1000);
+
+    /* Coast out  */
     Eyebot.SetMotorState (false);
+    delay (1000);
 
-  Eyebot.SetTailWheelAngle (0);
+    /* Reenable power switch  */
+    Eyebot.SetMotorState (true);
 
-  delay (100);
-}
+    /* Drive backwards  */
+    Eyebot.SetForwardSpeed (-0.10f);
+    delay (1000);
+
+    /* Stop the robot  */
+    Eyebot.Stop ();
+
+    /* Tail wheel servo  */
+    Eyebot.SetTailWheelAngle (10);
+    delay (300);
+
+    Eyebot.SetTailWheelAngle (-10);
+    delay (600);
+
+    Eyebot.SetTailWheelAngle (0);
+    delay (300);
+
+    /* Disable Traco to avoid noise */
+    Eyebot.SetTracoState (false);
+    delay (500);
+
+  }

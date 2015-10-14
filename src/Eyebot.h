@@ -30,6 +30,7 @@ namespace BFH
       public:
         void Init ();
 
+        void SetLed (int Led, bool State);
         void SetLed (int Led, int Value);
         void SetTracoState (bool State);
         void SetLineSensorState (bool State);
@@ -37,6 +38,7 @@ namespace BFH
         bool GetButton (int Button);
         int GetLineSensor (int Sensor);
         float GetBatteryVoltage ();
+        int GetBatteryPercent ();
 
         void Stop ();
 

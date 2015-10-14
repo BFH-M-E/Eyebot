@@ -18,6 +18,9 @@ namespace BFH
         pinMode (Led2Pin, OUTPUT);
         pinMode (Led3Pin, OUTPUT);
 
+        /* Traco enable  */
+        pinMode (TracoEnablePin, OUTPUT);
+
         /* Sensors  */
         pinMode (LineSensorEnablePin, OUTPUT);
 
@@ -25,6 +28,12 @@ namespace BFH
         ::Hourglass.Init ();
 
         InitPropulsion ();
+      }
+
+    void
+    Eyebot::SetLed (int Led, bool Value)
+      {
+        SetLed (Led, 255 * Value);
       }
 
     void
@@ -68,7 +77,7 @@ namespace BFH
     bool
     Eyebot::GetButton (int Button)
       {
-        bool state;
+        bool state = false;
 
         switch (Button)
           {
@@ -133,6 +142,33 @@ namespace BFH
         float batteryVoltage = analogVoltage / 0.3125f;
 
         return batteryVoltage;
+      }
+
+    int
+    Eyebot::GetBatteryPercent ()
+      {
+        /* Read current battery voltage  */
+        float voltage = GetBatteryVoltage ();
+
+        /* Low pass  */
+        static float filteredVoltage = 10.0f;
+        float alpha = 0.3; /* Higher value leads to faster convergation  */
+        filteredVoltage *= (1 - alpha);
+        filteredVoltage += alpha * voltage;
+
+        /* Limit voltage  */
+        float result = filteredVoltage;
+        if (result > BatteryFullVoltage)
+          result = BatteryFullVoltage;
+        if (result < BatteryEmptyVoltage)
+          result = BatteryEmptyVoltage;
+
+        /* Convert to percent  */
+        result -= BatteryEmptyVoltage;
+        result *= 100;
+        result /= (BatteryFullVoltage - BatteryEmptyVoltage);
+
+        return static_cast<int> (result);
       }
 
 

@@ -127,6 +127,7 @@ InitPropulsion ()
     Hourglass.RegisterEvent (0, ControlMotors, 2);
 
     TailWheelServo.attach (TailWheelServoPin);
+    SetTailWheelAngle (0);
   }
 
 void

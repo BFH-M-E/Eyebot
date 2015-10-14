@@ -4,6 +4,8 @@
 /* ==========     Limits     ==========  */
 const float BatteryCutoffVoltage = 11.0f;
 
+const float BatteryEmptyVoltage = 10.0f;
+const float BatteryFullVoltage = 12.3f;
 
 /* ==========     Pins     ==========  */
 
