@@ -1,5 +1,6 @@
 #include "FreeRTOS/FreeRTOS_AVR.h"
 #include "arduino.h"
+#include "definitions.h"
 #include "Eyebot.h"
 
 namespace BFH
@@ -25,10 +26,30 @@ namespace BFH
       }
 
     void
+    BlinkyTask (void* param)
+      {
+        pinMode (Led2Pin, OUTPUT);
+        while (1)
+          {
+            static bool state = false;
+            digitalWrite (Led2Pin, state);
+            state = !state;
+            Serial.println (xTaskGetTickCount ());
+
+            vTaskDelay (50);
+          }
+      }
+
+    void
     InitRtos ()
       {
-        if (xTaskCreate (BatteryCheckTask, NULL, 512,
-            NULL, 2, NULL) != pdPASS)
+        if (xTaskCreate (BlinkyTask, NULL, 256, NULL, 2, NULL) != pdPASS)
+          {
+            Serial.println (F ("ERROR: TaskCreate: BlinkyTask"));
+            while (1);
+          }
+
+        if (xTaskCreate (BatteryCheckTask, NULL, 256, NULL, 2, NULL) != pdPASS)
           {
             Serial.println (F ("ERROR: TaskCreate: BatteryCheckTask"));
             while (1);

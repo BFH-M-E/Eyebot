@@ -6,6 +6,8 @@
 #include "propulsion.h"
 #include "Servo.h"
 
+#include "FreeRTOS/FreeRTOS_AVR.h"
+
 /* P and I value for the PI controller. The values do not correspond to
    something human readable, just tweak them as needed by hand  */
 const int PValue = 300;
@@ -50,69 +52,74 @@ int TailServoAngle = 0;
 
 Servo TailWheelServo;
 
-void ControlMotors ()
+void ControlMotorTask (void* param)
   {
-    /* Resume interrupts  */
-    sei();
+    /* Initialize last wake time with current time  */
+    TickType_t lastWakeTime = xTaskGetTickCount();
 
-    /* Read encoder values  */
-    long encoderValueLeft  = GetEncoderTicksLeft ();
-    long encoderValueRight = GetEncoderTicksRight ();
+    while (1)
+      {
+        /* Read encoder values  */
+        long encoderValueLeft  = GetEncoderTicksLeft ();
+        long encoderValueRight = GetEncoderTicksRight ();
 
-    static long lastEncoderValueLeft  = 0;
-    static long lastEncoderValueRight = 0;
+        static long lastEncoderValueLeft  = 0;
+        static long lastEncoderValueRight = 0;
 
-    /* Velocity is way per time. We normalize the time to 1, as the ISR is
-       called periodically and we have no strict need for human readable
-       values  */
-    int speedLeft  = (encoderValueLeft  - lastEncoderValueLeft)  / 1;
-    int speedRight = (encoderValueRight - lastEncoderValueRight) / 1;
+        /* Velocity is way per time. We normalize the time to 1, as the ISR is
+           called periodically and we have no strict need for human readable
+           values  */
+        int speedLeft  = (encoderValueLeft  - lastEncoderValueLeft)  / 1;
+        int speedRight = (encoderValueRight - lastEncoderValueRight) / 1;
 
-    /* Backup encoder value  */
-    lastEncoderValueLeft  = encoderValueLeft;
-    lastEncoderValueRight = encoderValueRight;
+        /* Backup encoder value  */
+        lastEncoderValueLeft  = encoderValueLeft;
+        lastEncoderValueRight = encoderValueRight;
 
-    static int limitedTargetSpeedLeft = 0;
-    static int limitedTargetSpeedRight = 0;
+        static int limitedTargetSpeedLeft = 0;
+        static int limitedTargetSpeedRight = 0;
 
-    /* Limit acceleration to prevent wheelspin  */
-    if (TargetSpeedLeft > limitedTargetSpeedLeft + RampStep)
-      limitedTargetSpeedLeft += RampStep;
-    else if (TargetSpeedLeft < limitedTargetSpeedLeft - RampStep)
-      limitedTargetSpeedLeft -= RampStep;
-    else
-      limitedTargetSpeedLeft = TargetSpeedLeft;
+        /* Limit acceleration to prevent wheelspin  */
+        if (TargetSpeedLeft > limitedTargetSpeedLeft + RampStep)
+          limitedTargetSpeedLeft += RampStep;
+        else if (TargetSpeedLeft < limitedTargetSpeedLeft - RampStep)
+          limitedTargetSpeedLeft -= RampStep;
+        else
+          limitedTargetSpeedLeft = TargetSpeedLeft;
 
-    if (TargetSpeedRight > limitedTargetSpeedRight + RampStep)
-      limitedTargetSpeedRight += RampStep;
-    else if (TargetSpeedRight < limitedTargetSpeedRight - RampStep)
-      limitedTargetSpeedRight -= RampStep;
-    else
-      limitedTargetSpeedRight = TargetSpeedRight;
+        if (TargetSpeedRight > limitedTargetSpeedRight + RampStep)
+          limitedTargetSpeedRight += RampStep;
+        else if (TargetSpeedRight < limitedTargetSpeedRight - RampStep)
+          limitedTargetSpeedRight -= RampStep;
+        else
+          limitedTargetSpeedRight = TargetSpeedRight;
 
-    /* Calculate speed error  */
-    int speedErrorLeft = limitedTargetSpeedLeft - speedLeft;
-    int speedErrorRight = limitedTargetSpeedRight - speedRight;
+        /* Calculate speed error  */
+        int speedErrorLeft = limitedTargetSpeedLeft - speedLeft;
+        int speedErrorRight = limitedTargetSpeedRight - speedRight;
 
-    /* Calculate integrated speed error  */
-    integratedErrorLeft += speedErrorLeft;
-    integratedErrorRight += speedErrorRight;
+        /* Calculate integrated speed error  */
+        integratedErrorLeft += speedErrorLeft;
+        integratedErrorRight += speedErrorRight;
 
-    /* Prevent integral wind up  */
-    if (integratedErrorLeft  > 200)  integratedErrorLeft  = 200;
-    else if (integratedErrorLeft  < -200) integratedErrorLeft  = -200;
-    if (integratedErrorRight > 200)  integratedErrorRight = 200;
-    else if (integratedErrorRight < -200) integratedErrorRight = -200;
+        /* Prevent integral wind up  */
+        if (integratedErrorLeft  > 200)  integratedErrorLeft  = 200;
+        else if (integratedErrorLeft  < -200) integratedErrorLeft  = -200;
+        if (integratedErrorRight > 200)  integratedErrorRight = 200;
+        else if (integratedErrorRight < -200) integratedErrorRight = -200;
 
-    /* PID controller  */
-    long outputLeft = PValue * speedErrorLeft
-        + IValue * integratedErrorLeft;
-    long outputRight = PValue * speedErrorRight
-        + IValue * integratedErrorRight;
+        /* PID controller  */
+        long outputLeft = PValue * speedErrorLeft
+            + IValue * integratedErrorLeft;
+        long outputRight = PValue * speedErrorRight
+            + IValue * integratedErrorRight;
 
-    /* Control motors  */
-    SetPwmLeft (outputLeft / CompressionFactor);
-    SetPwmRight (outputRight / CompressionFactor);
+        /* Control motors  */
+        SetPwmLeft (outputLeft / CompressionFactor);
+        SetPwmRight (outputRight / CompressionFactor);
+
+        vTaskDelayUntil (&lastWakeTime, 20);
+      }
   }
 
 void
@@ -122,9 +129,12 @@ InitPropulsion ()
     InitEncoders ();
     InitMotors ();
 
-    /* Register the ControlMotors function to be executed every other
-       Hourglass tick (e.g. every 20 ms -> at 50 Hz)  */
-    Hourglass.RegisterEvent (0, ControlMotors, 2);
+    /* Initialize task to control motors with high priority  */
+    if (xTaskCreate (ControlMotorTask, NULL, 512, NULL, 3, NULL) != pdPASS)
+      {
+        Serial.println (F ("ERROR: TaskCreate: ControlMotorTask"));
+        while (1);
+      }
 
     TailWheelServo.attach (TailWheelServoPin);
     SetTailWheelAngle (0);

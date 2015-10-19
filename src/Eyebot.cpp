@@ -29,9 +29,6 @@ namespace BFH
         /* Sensors  */
         pinMode (LineSensorEnablePin, OUTPUT);
 
-        /* Initialize (the inlined) Hourglass library in slow mode  */
-        ::Hourglass.Init ();
-
         InitPropulsion ();
 
         InitRtos ();
