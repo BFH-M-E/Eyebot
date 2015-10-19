@@ -1,17 +1,38 @@
 #include "FreeRTOS/FreeRTOS_AVR.h"
 #include "arduino.h"
+#include "Eyebot.h"
 
 namespace BFH
   {
     void
+    BatteryCheckTask (void* param)
+      {
+        /* Initialize global variable  */
+        BatteryVoltage = ::Eyebot.GetBatteryVoltage ();
+
+        while (1)
+          {
+            /* Read current battery voltage  */
+            float voltage = ::Eyebot.GetBatteryVoltage ();
+
+            /* Low pass  */
+            float alpha = 0.3;  /* Higher value leads to faster convergation  */
+            BatteryVoltage *= (1 - alpha);
+            BatteryVoltage += alpha * voltage;
+
+            vTaskDelay (1000);
+          }
+      }
+
+    void
     InitRtos ()
       {
-        /*
-        if (xTaskCreate (Thread1, NULL, configMINIMAL_STACK_SIZE, NULL, 2, NULL) != pdPASS)
+        if (xTaskCreate (BatteryCheckTask, NULL, 512,
+            NULL, 2, NULL) != pdPASS)
           {
-            Serial.println (F ("Creation problem"));
+            Serial.println (F ("ERROR: TaskCreate: BatteryCheckTask"));
             while (1);
-          } */
+          }
 
         /* Start scheduler  */
         vTaskStartScheduler ();

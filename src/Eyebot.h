@@ -1,6 +1,8 @@
 #ifndef EYEBOT_H
 #define EYEBOT_H
 
+#include "FreeRTOS/FreeRTOS_AVR.h"
+
 enum Led
   {
     Led1,
@@ -25,6 +27,8 @@ enum LineSensor
 
 namespace BFH
   {
+    extern float BatteryVoltage;
+
     class Eyebot
       {
       public:
@@ -46,8 +50,6 @@ namespace BFH
 
         void SetForwardSpeed (float Speed);
         void SetTailWheelAngle (int AngleInDegree);
-      private:
-        float BatteryVoltage;
       };
   }
 

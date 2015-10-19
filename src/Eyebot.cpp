@@ -8,9 +8,13 @@
 
 namespace BFH
   {
+    float BatteryVoltage = 0.0f;
+
     void
     Eyebot::Init ()
       {
+        Serial.begin (9600);
+
         /* User interface  */
         pinMode (Button1Pin, INPUT);
         pinMode (Button2Pin, INPUT);
@@ -27,9 +31,6 @@ namespace BFH
 
         /* Initialize (the inlined) Hourglass library in slow mode  */
         ::Hourglass.Init ();
-
-        /* Initialize battery voltage estimation  */
-        BatteryVoltage = GetBatteryVoltage ();
 
         InitPropulsion ();
 
@@ -153,14 +154,6 @@ namespace BFH
     int
     Eyebot::GetBatteryPercent ()
       {
-        /* Read current battery voltage  */
-        float voltage = GetBatteryVoltage ();
-
-        /* Low pass  */
-        float alpha = 0.3; /* Higher value leads to faster convergation  */
-        BatteryVoltage *= (1 - alpha);
-        BatteryVoltage += alpha * voltage;
-
         /* Limit voltage  */
         float result = BatteryVoltage;
         if (result > BatteryFullVoltage)
