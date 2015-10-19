@@ -41,6 +41,20 @@ namespace BFH
       }
 
     void
+    LoopUserTask (void* param)
+      {
+        /* Forward declaration  */
+        void loop ();
+
+        /* Call the arduino "loop" function, so that the user has a normal
+           Arduino environment with a setup and loop function that behave
+           as usual - except that the loop funciton is controlled by the
+           RTOS kernel  */
+        while (1)
+          ::loop ();
+      }
+
+    void
     InitRtos ()
       {
         if (xTaskCreate (BlinkyTask, NULL, 256, NULL, 2, NULL) != pdPASS)
@@ -52,6 +66,12 @@ namespace BFH
         if (xTaskCreate (BatteryCheckTask, NULL, 256, NULL, 2, NULL) != pdPASS)
           {
             Serial.println (F ("ERROR: TaskCreate: BatteryCheckTask"));
+            while (1);
+          }
+
+        if (xTaskCreate (LoopUserTask, NULL, 1024, NULL, 1, NULL) != pdPASS)
+          {
+            Serial.println (F ("ERROR: TaskCreate: (user)LoopUserTask"));
             while (1);
           }
 
