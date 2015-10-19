@@ -1,4 +1,3 @@
-#include <FreeRTOS_AVR.h>
 #include "Eyebot.h"
 
 void
