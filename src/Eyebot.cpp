@@ -1,4 +1,5 @@
 #include "arduino.h"
+#include "battery.h"
 #include "definitions.h"
 #include "propulsion.h"
 
@@ -30,6 +31,7 @@ namespace BFH
         pinMode (LineSensorEnablePin, OUTPUT);
 
         InitPropulsion ();
+        InitBatteryChecker ();
 
         InitRtos ();
       }
@@ -37,7 +39,10 @@ namespace BFH
     void
     Eyebot::SetLed (int Led, bool Value)
       {
-        SetLed (Led, 255 * Value);
+        if (Value)
+          SetLed (Led, 255);
+        else
+          SetLed (Led, 0);
       }
 
     void

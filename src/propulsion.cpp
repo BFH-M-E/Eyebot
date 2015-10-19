@@ -1,6 +1,7 @@
 #include "arduino.h"
 #include "definitions.h"
 #include "encoders.h"
+#include "Eyebot.h"
 #include "Hourglass.h"
 #include "motors.h"
 #include "propulsion.h"
@@ -138,6 +139,8 @@ InitPropulsion ()
 
     TailWheelServo.attach (TailWheelServoPin);
     SetTailWheelAngle (0);
+
+    ::Eyebot.SetTracoState (true);
   }
 
 void
