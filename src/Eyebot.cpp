@@ -4,6 +4,7 @@
 
 #include "Eyebot.h"
 #include "Hourglass.h"
+#include "RTOS.h"
 
 namespace BFH
   {
@@ -31,6 +32,8 @@ namespace BFH
         BatteryVoltage = GetBatteryVoltage ();
 
         InitPropulsion ();
+
+        InitRtos ();
       }
 
     void
