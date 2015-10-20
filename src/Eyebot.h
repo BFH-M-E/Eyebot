@@ -55,6 +55,11 @@ namespace BFH
         float GetBatteryVoltage ();
         int GetBatteryPercent ();
 
+        int GetSrfLeftValue ();
+        int GetSrfRightValue ();
+        int GetSrfSideValue ();
+        int GetSrfBackValue ();
+
         void Stop ();
 
         void SetMotorState (bool State);

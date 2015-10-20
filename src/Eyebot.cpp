@@ -176,6 +176,29 @@ namespace BFH
         return static_cast<int> (result);
       }
 
+    int
+    Eyebot::GetSrfLeftValue ()
+      {
+        return GetSrfData (FrontLeft).GetData ();
+      }
+
+    int
+    Eyebot::GetSrfRightValue ()
+      {
+        return GetSrfData (FrontRight).GetData ();
+      }
+
+    int
+    Eyebot::GetSrfSideValue ()
+      {
+        return GetSrfData (SideLeft).GetData ();
+      }
+
+    int
+    Eyebot::GetSrfBackValue ()
+      {
+        return GetSrfData (Rear).GetData ();
+      }
 
     void
     Eyebot::Stop ()

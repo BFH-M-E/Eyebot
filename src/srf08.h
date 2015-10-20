@@ -1,31 +1,49 @@
 #ifndef SRF08_H
 #define SRF08_H
 
-namespace Srf
+#include "arduino.h" /* for types  */
+
+namespace BFH
   {
-    enum SrfNumber
+    enum
       {
         FrontLeft,
         FrontRight,
         SideLeft,
         Rear,
       };
-  }
 
-namespace BFH
-  {
+    class SrfData
+      {
+      public:
+        SrfData ();
+        SrfData (int Range);
+        SrfData (int Range, long Timestamp);
+
+        int GetData ();
+        long GetTimestamp ();
+
+      private:
+        int _Range;
+        long _Timestamp;
+      };
+
     class Srf08
       {
       public:
         Srf08 (byte Address);
-        int GetDistance ();
 
-        byte I2cAddress;
-        byte Distance;
+        void StartMeasurement ();
+        SrfData GetData ();
+
+      private:
+          byte _Address;
       };
 
     void InitSrf ();
-    int GetSrfDistance (int Srf);
+    SrfData GetSrfData (int Name);
+    const int MaxNumberOfSrfs = 4;
   }
+
 
 #endif /* end of include guard: SRF08_H */
