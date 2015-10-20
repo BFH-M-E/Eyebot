@@ -25,6 +25,17 @@ enum LineSensor
     LineSensor4,
   };
 
+namespace RobotColor
+  {
+    enum Color
+      {
+        Green,
+        Blue,
+        Black,
+        Gold,
+      };
+  }
+
 namespace BFH
   {
     extern float BatteryVoltage;
@@ -32,7 +43,7 @@ namespace BFH
     class Eyebot
       {
       public:
-        void Init ();
+        void Init (int Color);
 
         void SetLed (int Led, bool State);
         void SetLed (int Led, int Value);
@@ -50,6 +61,8 @@ namespace BFH
 
         void SetForwardSpeed (float Speed);
         void SetTailWheelAngle (int AngleInDegree);
+
+        int Color;
       };
   }
 

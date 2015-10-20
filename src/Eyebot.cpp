@@ -2,9 +2,10 @@
 #include "battery.h"
 #include "definitions.h"
 #include "propulsion.h"
+#include "srf08.h"
+#include "Wire.h"
 
 #include "Eyebot.h"
-#include "Hourglass.h"
 #include "RTOS.h"
 
 namespace BFH
@@ -12,9 +13,12 @@ namespace BFH
     float BatteryVoltage = 0.0f;
 
     void
-    Eyebot::Init ()
+    Eyebot::Init (int Color)
       {
+        this->Color = Color;
+
         Serial.begin (9600);
+        Wire.begin ();
 
         /* User interface  */
         pinMode (Button1Pin, INPUT);
@@ -31,6 +35,7 @@ namespace BFH
         pinMode (LineSensorEnablePin, OUTPUT);
 
         InitPropulsion ();
+        InitSrf ();
         InitBatteryChecker ();
 
         InitRtos ();
