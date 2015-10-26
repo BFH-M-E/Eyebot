@@ -54,7 +54,6 @@ namespace BFH
         bool GetButton (int Button);
         int GetLineSensor (int Sensor);
         float GetBatteryVoltage ();
-        int GetBatteryPercent ();
 
         int GetSrfLeftValue ();
         int GetSrfRightValue ();

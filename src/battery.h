@@ -4,6 +4,8 @@
 namespace BFH
   {
     void InitBatteryChecker ();
+
+    extern int BatteryPercentage;
   }
 
 

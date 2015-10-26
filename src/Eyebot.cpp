@@ -161,24 +161,6 @@ namespace BFH
       }
 
     int
-    Eyebot::GetBatteryPercent ()
-      {
-        /* Limit voltage  */
-        float result = BatteryVoltage;
-        if (result > BatteryFullVoltage)
-          result = BatteryFullVoltage;
-        if (result < BatteryEmptyVoltage)
-          result = BatteryEmptyVoltage;
-
-        /* Convert to percent  */
-        result -= BatteryEmptyVoltage;
-        result *= 100;
-        result /= (BatteryFullVoltage - BatteryEmptyVoltage);
-
-        return static_cast<int> (result);
-      }
-
-    int
     Eyebot::GetSrfLeftValue ()
       {
         return GetSrfData (FrontLeft).GetData ();
@@ -205,25 +187,29 @@ namespace BFH
     int
     Eyebot::GetCurrentForm ()
       {
-
+        return Display::GetCurrentForm ();
       }
 
-    bool IsTask1Enabled ()
+    bool
+    IsTask1Enabled ()
       {
         return Display::GetTaskState (0);
       }
 
-    bool IsTask2Enabled ()
+    bool
+    IsTask2Enabled ()
       {
         return Display::GetTaskState (1);
       }
 
-    bool IsTask3Enabled ()
+    bool
+    IsTask3Enabled ()
       {
         return Display::GetTaskState (2);
       }
 
-    bool IsTask4Enabled ()
+    bool
+    IsTask4Enabled ()
       {
         return Display::GetTaskState (3);
       }

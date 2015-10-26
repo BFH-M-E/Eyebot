@@ -2,6 +2,8 @@
 #include "definitions.h"
 #include "encoders.h"
 
+using namespace BFH;
+
 /* Constant to be used in the conversion from ticks to meters. This value
    determines, how far the robot "thinks" he has driven. Tweak this value by
    hand if necessary.

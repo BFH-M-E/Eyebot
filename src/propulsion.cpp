@@ -8,6 +8,8 @@
 
 #include "FreeRTOS/FreeRTOS_AVR.h"
 
+using namespace BFH;
+
 /* P and I value for the PI controller. The values do not correspond to
    something human readable, just tweak them as needed by hand  */
 const int PValue = 300;

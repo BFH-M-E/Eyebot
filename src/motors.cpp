@@ -2,6 +2,8 @@
 #include "definitions.h"
 #include "motors.h"
 
+using namespace BFH;
+
 bool PowerSwitchEnable = true;
 
 void

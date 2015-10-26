@@ -1,5 +1,6 @@
 #include "arduino.h"
 #include "battery.h"
+#include "display.h"
 #include "definitions.h"
 #include "Eyebot.h"
 
@@ -7,6 +8,8 @@
 
 namespace BFH
   {
+    int BatteryPercentage = 0;
+
     void
     BatteryCheckTask (void* param)
       {
@@ -22,6 +25,27 @@ namespace BFH
             float alpha = 0.3;  /* Higher value leads to faster convergation  */
             BatteryVoltage *= (1 - alpha);
             BatteryVoltage += alpha * voltage;
+
+            /* Limit voltage  */
+            float result = BatteryVoltage;
+            if (result > BatteryFullVoltage)
+              result = BatteryFullVoltage;
+            if (result < BatteryEmptyVoltage)
+              result = BatteryEmptyVoltage;
+
+            /* Convert to percent  */
+            result -= BatteryEmptyVoltage;
+            result *= 100;
+            result /= (BatteryFullVoltage - BatteryEmptyVoltage);
+            BatteryPercentage = static_cast<int> (result);
+
+            Display::ShowBatteryLevel (BatteryPercentage);
+
+            /* Show warning screen if battery voltage drops too low  */
+            if (BatteryPercentage < BatteryWarningPercentage)
+              {
+                Display::ShowForm (Display::BatteryWarning);
+              }
 
             /* Low voltage cutoff  */
             if (BatteryVoltage < BatteryEmptyVoltage)

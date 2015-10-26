@@ -5,6 +5,7 @@ namespace BFH
   {
     namespace Display
       {
+        /* Forms  */
         enum
           {
             Landing = 0,
@@ -13,11 +14,12 @@ namespace BFH
             Aufgabe3 = 3,
             Aufgabe4 = 4,
             BatteryWarning = 5,
-            // Pixy = 6,
+            Pixy = 6,
           };
 
-        namespace FrmSplash
+        namespace FrmLanding
           {
+            /* Buttons  */
             enum
               {
                 BtnAufgabe1 = 0,
@@ -25,30 +27,69 @@ namespace BFH
                 BtnAufgabe3 = 2,
                 BtnAufgabe4 = 3,
               };
+
+            /* Strings  */
+            enum
+              {
+                StrBattery = 0,
+              };
+
+            /* Battery container "Tank"  */
+            enum
+              {
+                TnkBattery = 0,
+              };
           }
 
         namespace FrmAufgabe1
           {
+            /* Buttons  */
             enum
               {
                 BtnStart = 5,
                 BtnStop = 6,
                 BtnZuruck = 4,
               };
+
+            /* Strings  */
+            enum
+              {
+                StrBattery = 1,
+              };
+
+            /* Battery container "Tank"  */
+            enum
+              {
+                TnkBattery = 1,
+              };
           }
 
         namespace FrmAufgabe2
           {
+            /* Buttons  */
             enum
               {
                 BtnStart = 8,
                 BtnStop = 7,
                 BtnZuruck = 9,
               };
+
+            /* Strings  */
+            enum
+              {
+                StrBattery = 6,
+              };
+
+            /* Battery container "Tank"  */
+            enum
+              {
+                TnkBattery = 2,
+              };
           }
 
         namespace FrmAufgabe3
           {
+            /* Buttons  */
             enum
               {
                 BtnStart = 10,
@@ -59,10 +100,23 @@ namespace BFH
                 BtnUser3 = 13,
                 BtnUser4 = 15,
               };
+
+            /* Strings  */
+            enum
+              {
+                StrBattery = 7,
+              };
+
+            /* Battery container "Tank"  */
+            enum
+              {
+                TnkBattery = 3,
+              };
           }
 
         namespace FrmAufgabe4
           {
+            /* Buttons  */
             enum
               {
                 BtnStart = 19,
@@ -73,20 +127,49 @@ namespace BFH
                 BtnUser3 = 22,
                 BtnUser4 = 23,
               };
+
+            /* Strings  */
+            enum
+              {
+                StrBattery = 12,
+              };
+
+            /* Battery container "Tank"  */
+            enum
+              {
+                TnkBattery = 4,
+              };
           }
 
         namespace FrmBatteryWarning
           {
-
+            /* Battery container "Tank"  */
+            enum
+              {
+                TnkBattery = 6,
+              };
           }
 
         namespace FrmPixy
           {
+            /* Buttons  */
             enum
               {
                 BtnStart = 24,
                 BtnStop = 25,
                 BtnZuruck = 26,
+              };
+
+            /* Strings  */
+            enum
+              {
+                StrBattery = 17,
+              };
+
+            /* Battery container "Tank"  */
+            enum
+              {
+                TnkBattery = 5,
               };
           }
       }
@@ -96,14 +179,12 @@ namespace BFH
         void Init ();
 
         void ShowForm (int Form);
+        int GetCurrentForm ();
+
+        void ShowBatteryLevel (int Percentage);
+
         bool GetTaskState (int Task);
-        int GetButtonPresses (int Index);
-
-        const int NumberOfForms = 6;
-        const int NumberOfButtons = 4;
-        const int NumberOfButtonCounters = 8;
-
-        extern int CurrentForm;
+        int GetButtonPresses (int Button);
       }
   }
 

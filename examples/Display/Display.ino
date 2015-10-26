@@ -12,7 +12,5 @@ setup ()
 void
 loop ()
   {
-    Serial.println (Eyebot.GetButtonPresses (3, 2));
 
-    delay (500);
   }
