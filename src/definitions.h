@@ -51,4 +51,7 @@ const int Servo6Pin = 33;
 const int BatteryPin = 15;
 const int TracoEnablePin = 38;
 
+/* Display  */
+const int DisplayResetPin = 10;
+
 #endif /* end of include guard: DEFINITIONS_H */
