@@ -6,15 +6,13 @@
 void
 setup ()
   {
-    Serial.begin (9600);
-
-    BFH::Display::Init ();
+    Eyebot.Init (RobotColor::Red);
   }
 
 void
 loop ()
   {
-    BFH::Display::Update ();
+    Serial.println (Eyebot.GetButtonPresses (3, 2));
 
-    Serial.println (BFH::Display::GetButton (0) ? "true" : "false");
+    delay (500);
   }

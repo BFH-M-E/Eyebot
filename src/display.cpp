@@ -1,7 +1,9 @@
 #include "arduino.h"
 #include "definitions.h"
 #include "display.h"
+
 #include "genieArduino/genieArduino.h"
+#include "FreeRTOS/FreeRTOS_AVR.h"
 
 namespace BFH
   {
@@ -11,6 +13,7 @@ namespace BFH
 
         int CurrentForm = 0;
         bool ButtonState[NumberOfButtons] = {};
+        int ButtonPresses[NumberOfButtonCounters] = {};
 
         int ButtonStateSetButton[] =
           {
@@ -28,8 +31,21 @@ namespace BFH
             FrmAufgabe4::BtnStop,
           };
 
+        int ButtonPressCounterButton[] =
+          {
+            FrmAufgabe3::BtnUser1,
+            FrmAufgabe3::BtnUser2,
+            FrmAufgabe3::BtnUser3,
+            FrmAufgabe3::BtnUser4,
+            FrmAufgabe4::BtnUser1,
+            FrmAufgabe4::BtnUser2,
+            FrmAufgabe4::BtnUser3,
+            FrmAufgabe4::BtnUser4,
+          };
+
         /* Forward declaration  */
         void DisplayEventHandler ();
+        void DisplayTask (void* param);
 
         void
         Init ()
@@ -46,13 +62,27 @@ namespace BFH
             delay (100);
             digitalWrite (DisplayResetPin, true);
             delay (3500);
+
+            /* Init display task  */
+            if (xTaskCreate (DisplayTask, NULL, 256, NULL, 2, NULL) != pdPASS)
+              {
+                Serial.println (F ("ERROR: TaskCreate: DisplayTask"));
+                while (1);
+              }
           }
 
-void
-Update ()
-  {
-    genie.DoEvents();
-  }
+        void
+        DisplayTask (void* param)
+          {
+            while (1)
+              {
+                /* Request display events  */
+                genie.DoEvents();
+
+                /* Sampling the events at 200 Hz should be enough  */
+                vTaskDelay (5);
+              }
+          }
 
         void
         DisplayEventHandler ()
@@ -68,7 +98,14 @@ Update ()
                    namespace BFH::Display (display.h) to find the relation
                    between indices and actual forms  */
                 if (genie.EventIs (&Event, GENIE_REPORT_EVENT, GENIE_OBJ_FORM, i))
-                  CurrentForm = i;
+                  {
+                    /* Set all tasks buttons state to false (e.g. let the
+                       user programm think, the "Stop" button was pressed)  */
+                    for (int j = 0; j < NumberOfButtons; ++j)
+                      ButtonState[j] = false;
+
+                    CurrentForm = i;
+                  }
               }
 
             /* There is an array containing some bools. Those bools get set on
@@ -86,15 +123,46 @@ Update ()
                     ButtonStateResetButton[i]))
                   ButtonState[i] = false;
               }
+
+            /* For some of the buttons, the user cares for how many times they
+               have been pressed since the application was started. Therefore
+               we have an array that builds the relation between the indices
+               and the actual buttons. This array is defined at the top of
+               this file  */
+            for (int i = 0; i < NumberOfButtonCounters; ++i)
+              {
+                if (genie.EventIs(&Event, GENIE_REPORT_EVENT, GENIE_OBJ_WINBUTTON,
+                    ButtonPressCounterButton[i]))
+                  ButtonPresses[i]++;
+              }
+
+          }
+
+        void
+        ShowForm (int Form)
+          {
+            if (Form < 0 || Form > NumberOfForms)
+              return;
+
+            genie.WriteObject (GENIE_OBJ_FORM, Form, 0);
           }
 
         bool
-        GetButton (int Button)
+        GetTaskState (int Task)
           {
-            if (Button < 0 || Button > NumberOfButtons)
+            if (Task < 0 || Task > NumberOfButtons)
               return false;
 
-            return ButtonState[Button];
+            return ButtonState[Task];
+          }
+
+        int
+        GetButtonPresses (int Index)
+          {
+            if (Index < 0 || Index > NumberOfButtonCounters)
+              return 0;
+
+            return ButtonPresses[Index];
           }
       }
   }

@@ -1,6 +1,7 @@
 #include "arduino.h"
 #include "battery.h"
 #include "definitions.h"
+#include "display.h"
 #include "propulsion.h"
 #include "srf08.h"
 #include "Wire.h"
@@ -34,6 +35,7 @@ namespace BFH
         /* Sensors  */
         pinMode (LineSensorEnablePin, OUTPUT);
 
+        Display::Init ();
         InitPropulsion ();
         InitSrf ();
         InitBatteryChecker ();
@@ -198,6 +200,43 @@ namespace BFH
     Eyebot::GetSrfBackValue ()
       {
         return GetSrfData (Rear).GetData ();
+      }
+
+    int
+    Eyebot::GetCurrentForm ()
+      {
+
+      }
+
+    bool IsTask1Enabled ()
+      {
+        return Display::GetTaskState (0);
+      }
+
+    bool IsTask2Enabled ()
+      {
+        return Display::GetTaskState (1);
+      }
+
+    bool IsTask3Enabled ()
+      {
+        return Display::GetTaskState (2);
+      }
+
+    bool IsTask4Enabled ()
+      {
+        return Display::GetTaskState (3);
+      }
+
+    int
+    Eyebot::GetButtonPresses (int Form, int Button)
+      {
+        if (Form < 3 || Form > 4)  return 0;
+        if (Button < 1 || Button > 4)  return 0;
+
+        int index = (Button - 1) + (Form == 4 ? 4 : 0);
+
+        return Display::GetButtonPresses (index);
       }
 
     void

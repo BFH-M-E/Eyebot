@@ -7,23 +7,23 @@ namespace BFH
       {
         enum
           {
-            Splash,
-            Aufgabe1,
-            Aufgabe2,
-            Aufgabe3,
-            Aufgabe4,
-            BatteryWarning,
-            // Pixy,
+            Landing = 0,
+            Aufgabe1 = 1,
+            Aufgabe2 = 2,
+            Aufgabe3 = 3,
+            Aufgabe4 = 4,
+            BatteryWarning = 5,
+            // Pixy = 6,
           };
 
         namespace FrmSplash
           {
             enum
               {
-                BtnAufgabe1,
-                BtnAufgabe2,
-                BtnAufgabe3,
-                BtnAufgabe4,
+                BtnAufgabe1 = 0,
+                BtnAufgabe2 = 1,
+                BtnAufgabe3 = 2,
+                BtnAufgabe4 = 3,
               };
           }
 
@@ -31,9 +31,9 @@ namespace BFH
           {
             enum
               {
-                BtnStart,
-                BtnStop,
-                BtnZuruck,
+                BtnStart = 5,
+                BtnStop = 6,
+                BtnZuruck = 4,
               };
           }
 
@@ -41,9 +41,9 @@ namespace BFH
           {
             enum
               {
-                BtnStart,
-                BtnStop,
-                BtnZuruck,
+                BtnStart = 8,
+                BtnStop = 7,
+                BtnZuruck = 9,
               };
           }
 
@@ -51,9 +51,13 @@ namespace BFH
           {
             enum
               {
-                BtnStart,
-                BtnStop,
-                BtnZuruck,
+                BtnStart = 10,
+                BtnStop = 11,
+                BtnZuruck = 12,
+                BtnUser1 = 14,
+                BtnUser2 = 16,
+                BtnUser3 = 13,
+                BtnUser4 = 15,
               };
           }
 
@@ -61,9 +65,13 @@ namespace BFH
           {
             enum
               {
-                BtnStart,
-                BtnStop,
-                BtnZuruck,
+                BtnStart = 19,
+                BtnStop = 17,
+                BtnZuruck = 18,
+                BtnUser1 = 20,
+                BtnUser2 = 21,
+                BtnUser3 = 22,
+                BtnUser4 = 23,
               };
           }
 
@@ -76,9 +84,9 @@ namespace BFH
           {
             enum
               {
-                BtnStart,
-                BtnStop,
-                BtnZuruck,
+                BtnStart = 24,
+                BtnStop = 25,
+                BtnZuruck = 26,
               };
           }
       }
@@ -87,14 +95,13 @@ namespace BFH
       {
         void Init ();
 
-void Update ();
-
         void ShowForm (int Form);
-        bool GetButton (int Button);
-        void Print ();
+        bool GetTaskState (int Task);
+        int GetButtonPresses (int Index);
 
         const int NumberOfForms = 6;
         const int NumberOfButtons = 4;
+        const int NumberOfButtonCounters = 8;
 
         extern int CurrentForm;
       }

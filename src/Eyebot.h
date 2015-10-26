@@ -29,6 +29,7 @@ namespace RobotColor
   {
     enum Color
       {
+        Red,
         Green,
         Blue,
         Black,
@@ -59,6 +60,15 @@ namespace BFH
         int GetSrfRightValue ();
         int GetSrfSideValue ();
         int GetSrfBackValue ();
+
+        /* Display  */
+        int GetCurrentForm ();
+        bool IsTask1Enabled ();
+        bool IsTask2Enabled ();
+        bool IsTask3Enabled ();
+        bool IsTask4Enabled ();
+        int GetButtonPresses (int Form, int Button);
+
 
         void Stop ();
 
