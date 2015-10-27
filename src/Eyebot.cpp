@@ -193,25 +193,25 @@ namespace BFH
     bool
     IsTask1Enabled ()
       {
-        return Display::GetTaskState (0);
+        return Display::GetSoftSwitchState (0);
       }
 
     bool
     IsTask2Enabled ()
       {
-        return Display::GetTaskState (1);
+        return Display::GetSoftSwitchState (1);
       }
 
     bool
     IsTask3Enabled ()
       {
-        return Display::GetTaskState (2);
+        return Display::GetSoftSwitchState (2);
       }
 
     bool
     IsTask4Enabled ()
       {
-        return Display::GetTaskState (3);
+        return Display::GetSoftSwitchState (3);
       }
 
     int

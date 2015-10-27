@@ -91,6 +91,7 @@ namespace BFH
             /* Variable to keep track of the time the display consumes
                to fully initialize itself  */
             long InitStartetAt = 0;
+            bool IsInitialized = false;
           }
 
         /* Forward declaration  */
@@ -100,7 +101,7 @@ namespace BFH
         void
         Init ()
           {
-            Serial3.begin (9600);
+            Serial3.begin (115200);
 
             /* Initialize display  */
             genie.Begin (Serial3);
@@ -117,7 +118,7 @@ namespace BFH
             InitStartetAt = millis ();
 
             /* Init display task  */
-            if (xTaskCreate (DisplayTask, NULL, 256, NULL, 2, NULL) != pdPASS)
+            if (xTaskCreate (DisplayTask, NULL, 1024, NULL, 2, NULL) != pdPASS)
               {
                 Serial.println (F ("ERROR: TaskCreate: DisplayTask"));
                 while (1);
@@ -135,6 +136,9 @@ namespace BFH
                wait time left  */
             if (timeSinceInit < InitTime)
               vTaskDelay (InitTime - timeSinceInit);
+
+            /* Assume display to be ready  */
+            IsInitialized = true;
 
             while (1)
               {
@@ -203,6 +207,9 @@ namespace BFH
         void
         ShowForm (int Form)
           {
+            if (!IsInitialized)
+              return;
+
             if (Form < 0 || Form > NumberOfForms)
               return;
 
@@ -218,22 +225,35 @@ namespace BFH
         void
         ShowBatteryLevel (int Percentage)
           {
+            if (!IsInitialized)
+              return;
+
             if (Percentage < 0)   Percentage = 0;
             if (Percentage > 100) Percentage = 100;
 
             for (int i = 0; i < NumberOfForms; ++i)
               {
+                /* Give the TX buffer some time to become free  */
+                vTaskDelay (5);
+
+                vTaskSuspendAll ();
                 genie.WriteObject (GENIE_OBJ_TANK, i, Percentage);
+                xTaskResumeAll ();
               }
 
             for (int i = 0; i < NumberOfBatteryStrings; ++i)
               {
+                /* Give the TX buffer some time to become free  */
+                vTaskDelay (5);
+
+                vTaskSuspendAll ();
                 genie.WriteStr (BatteryString[i], Percentage);
+                xTaskResumeAll ();
               }
           }
 
         bool
-        GetTaskState (int Task)
+        GetSoftSwitchState (int Task)
           {
             if (Task < 0 || Task > NumberOfButtons)
               return false;

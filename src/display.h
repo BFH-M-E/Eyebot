@@ -183,7 +183,7 @@ namespace BFH
 
         void ShowBatteryLevel (int Percentage);
 
-        bool GetTaskState (int Task);
+        bool GetSoftSwitchState (int Task);
         int GetButtonPresses (int Button);
       }
   }

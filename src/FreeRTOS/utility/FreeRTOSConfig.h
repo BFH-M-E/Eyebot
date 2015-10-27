@@ -81,11 +81,11 @@
  *----------------------------------------------------------*/
 
 #define configUSE_PREEMPTION		1
-#define configUSE_IDLE_HOOK			1
+#define configUSE_IDLE_HOOK			0
 #if 1  // WHG For Arduino
 #define configUSE_TICK_HOOK			1
 #define configCPU_CLOCK_HZ			( ( unsigned long ) F_CPU )
-#define configTICK_RATE_HZ			( ( TickType_t ) (F_CPU/16384L))
+#define configTICK_RATE_HZ			( ( TickType_t ) (1000))
 #else  // WHG
 #define configUSE_TICK_HOOK			0
 #define configCPU_CLOCK_HZ			( ( unsigned long ) 8000000 )

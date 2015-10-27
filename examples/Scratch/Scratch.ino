@@ -1,58 +1,77 @@
-#include <genieArduino.h>
+#include "display.h"
+#include "Wire.h"
 
-Genie genie;
-
-const int DisplayResetPin = 10;
-
-void
-DisplayEventHandler ()
-  { }
+#include "FreeRTOS/FreeRTOS_AVR.h"
 
 void
 setup ()
   {
-    Serial3.begin (9600);
+    Serial.begin (9600);
 
-    /* Initialize display  */
-    genie.Begin (Serial3);
-    genie.AttachEventHandler (DisplayEventHandler);
+    pinMode (38, OUTPUT);
+    digitalWrite (38, true);
 
-    /* Reset display (this step is mandatory)  */
-    pinMode (DisplayResetPin, OUTPUT);
-    digitalWrite (DisplayResetPin, false);
-    delay (100);
-    digitalWrite (DisplayResetPin, true);
-    delay (3500);
+    pinMode (44, OUTPUT);
+    pinMode (45, OUTPUT);
+    pinMode (46, OUTPUT);
+
+    if (xTaskCreate (BlinkyTask, NULL, 256, NULL, 2, NULL) != pdPASS)
+      {
+        Serial.println (F ("ERROR: TaskCreate: BlinkyTask"));
+        while (1);
+      }
+
+    if (xTaskCreate (LoopUserTask, NULL, 1024, NULL, 1, NULL) != pdPASS)
+      {
+        Serial.println (F ("ERROR: TaskCreate: (user)LoopUserTask"));
+        while (1);
+      }
+
+    digitalWrite (44, false);
+    digitalWrite (45, false);
+    digitalWrite (46, false);
+
+    BFH::Display::Init ();
+    vTaskStartScheduler ();
+
+    digitalWrite (44, true);
   }
 
   void
-  SetBatteryLevel (int Percentage)
+  BlinkyTask (void* param)
     {
-      if (Percentage < 0)   Percentage = 0;
-      if (Percentage > 100) Percentage = 100;
-
-      for (int i = 0; i < 6; ++i)
+      pinMode (45, OUTPUT);
+      while (1)
         {
-          genie.WriteObject (GENIE_OBJ_TANK, i, Percentage);
+          static bool state = false;
+          digitalWrite (45, state);
+          state = !state;
+
+          vTaskDelay (50);
         }
+    }
 
-      genie.WriteStr (0, Percentage);
+  void
+  LoopUserTask (void* param)
+    {
+      /* Forward declaration  */
+      void loop ();
 
+      /* Call the arduino "loop" function, so that the user has a normal
+         Arduino environment with a setup and loop function that behave
+         as usual - except that the loop funciton is controlled by the
+         RTOS kernel  */
+      while (1)
+        loop ();
     }
 
 void
 loop ()
   {
-    genie.DoEvents();
+    static int p = 0;
+    p += 3;
+    p %= 100;
+    BFH::Display::ShowBatteryLevel (p);
 
-    static long last = 0;
-    if ((millis () - last) > 20)
-      {
-        static int p = 0;
-        p += 3;
-        p %= 100;
-        SetBatteryLevel (p);
-
-        last = millis ();
-      }
+    delay (200);
   }
