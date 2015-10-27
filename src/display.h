@@ -13,8 +13,8 @@ namespace BFH
             Aufgabe2 = 2,
             Aufgabe3 = 3,
             Aufgabe4 = 4,
-            BatteryWarning = 5,
-            Pixy = 6,
+            Pixy = 5,
+            BatteryWarning = 6,
           };
 
         namespace FrmLanding
