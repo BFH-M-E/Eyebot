@@ -3,12 +3,6 @@
 
 namespace BFH
   {
-    /* ==========     Limits     ==========  */
-    const float BatteryEmptyVoltage = 10.0f;
-    const float BatteryFullVoltage = 12.3f;
-
-    const int BatteryWarningPercentage = 10;
-
     /* ==========     Pins     ==========  */
 
     /* Propulsion  */

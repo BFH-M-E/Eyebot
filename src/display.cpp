@@ -214,6 +214,8 @@ namespace BFH
               return;
 
             genie.WriteObject (GENIE_OBJ_FORM, Form, 0);
+
+            CurrentForm = Form;
           }
 
         int

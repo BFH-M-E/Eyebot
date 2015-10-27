@@ -3,9 +3,11 @@
 
 namespace BFH
   {
-    void InitBatteryChecker ();
-
-    extern int BatteryPercentage;
+    namespace Battery
+      {
+        void Init ();
+        int GetBatteryPercentage ();
+      }
   }
 
 

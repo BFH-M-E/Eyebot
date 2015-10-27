@@ -35,10 +35,10 @@ namespace BFH
         /* Sensors  */
         pinMode (LineSensorEnablePin, OUTPUT);
 
+        Battery::Init ();
         Display::Init ();
         InitPropulsion ();
         InitSrf ();
-        InitBatteryChecker ();
 
         InitRtos ();
       }
@@ -191,25 +191,25 @@ namespace BFH
       }
 
     bool
-    IsTask1Enabled ()
+    Eyebot::IsTask1Enabled ()
       {
         return Display::GetSoftSwitchState (0);
       }
 
     bool
-    IsTask2Enabled ()
+    Eyebot::IsTask2Enabled ()
       {
         return Display::GetSoftSwitchState (1);
       }
 
     bool
-    IsTask3Enabled ()
+    Eyebot::IsTask3Enabled ()
       {
         return Display::GetSoftSwitchState (2);
       }
 
     bool
-    IsTask4Enabled ()
+    Eyebot::IsTask4Enabled ()
       {
         return Display::GetSoftSwitchState (3);
       }
