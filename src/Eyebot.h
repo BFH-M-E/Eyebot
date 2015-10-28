@@ -76,6 +76,9 @@ namespace BFH
         void SetForwardSpeed (float Speed);
         void SetTailWheelAngle (int AngleInDegree);
 
+        float GetEncoderValueLeft ();
+        float GetEncoderValueRight ();
+
         int Color;
       };
   }

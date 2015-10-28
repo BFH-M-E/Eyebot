@@ -2,6 +2,7 @@
 #include "battery.h"
 #include "definitions.h"
 #include "display.h"
+#include "encoders.h"
 #include "propulsion.h"
 #include "srf08.h"
 #include "inline/Wire/Wire.h"
@@ -250,6 +251,28 @@ namespace BFH
     Eyebot::SetTailWheelAngle (int AngleInDegree)
       {
         ::SetTailWheelAngle (AngleInDegree);
+      }
+
+    float
+    Eyebot::GetEncoderValueLeft ()
+      {
+        /* NOTE: should be refactored  */
+
+        /* Convert ticks to distance in [m]  */
+        float distance = GetEncoderTicksLeft () / 3400.0f;
+
+        return distance;
+      }
+
+    float
+    Eyebot::GetEncoderValueRight ()
+      {
+        /* NOTE: should be refactored  */
+
+        /* Convert ticks to distance in [m]  */
+        float distance = GetEncoderTicksRight () / 3400.0f;
+
+        return distance;
       }
   }
 
