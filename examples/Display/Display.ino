@@ -1,5 +1,4 @@
 #include "Eyebot.h"
-#include "Wire.h"
 
 void
 setup ()

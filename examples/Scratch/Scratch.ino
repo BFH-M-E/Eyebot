@@ -1,5 +1,4 @@
 #include "display.h"
-#include "Wire.h"
 
 #include "FreeRTOS/FreeRTOS_AVR.h"
 

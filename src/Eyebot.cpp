@@ -4,7 +4,7 @@
 #include "display.h"
 #include "propulsion.h"
 #include "srf08.h"
-#include "Wire.h"
+#include "inline/Wire/Wire.h"
 
 #include "Eyebot.h"
 #include "RTOS.h"

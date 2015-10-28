@@ -1,6 +1,6 @@
 #include "arduino.h"
 #include "srf08.h"
-#include "Wire.h"
+#include "inline/Wire/Wire.h"
 
 #include "FreeRTOS/FreeRTOS_AVR.h"
 
