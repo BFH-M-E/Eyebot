@@ -9,6 +9,8 @@ setup ()
 void
 loop ()
   {
+    Eyebot.SetForwardSpeed (0.3);
+
     Eyebot.SetLed (Led1, true);
     Eyebot.SetLineSensorState (true);
     vTaskDelay (10);

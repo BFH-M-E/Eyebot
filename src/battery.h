@@ -7,6 +7,8 @@ namespace BFH
       {
         void Init ();
         int GetBatteryPercentage ();
+
+        void EmergencyShutdown ();
       }
   }
 

@@ -38,6 +38,7 @@ namespace BFH
         pinMode (LineSensorEnablePin, OUTPUT);
 
         Battery::Init ();
+        Currentlimit::Init ();
         Display::Init ();
         InitPropulsion ();
         InitSrf ();

@@ -69,11 +69,7 @@ namespace BFH
                 /* Low voltage cutoff  */
                 if (BatteryVoltage < BatteryEmptyVoltage)
                   {
-                    digitalWrite (TracoEnablePin, false);
-                    digitalWrite (Led1Pin, true);
-                    digitalWrite (Led2Pin, false);
-                    digitalWrite (Led3Pin, false);
-                    vTaskSuspendAll ();
+                    EmergencyShutdown ();
                   }
 
                 vTaskDelay (1000);
@@ -94,6 +90,16 @@ namespace BFH
         GetBatteryPercentage ()
           {
             return BatteryPercentage;
+          }
+
+        void
+        EmergencyShutdown ()
+          {
+            digitalWrite (TracoEnablePin, false);
+            digitalWrite (Led1Pin, true);
+            digitalWrite (Led2Pin, false);
+            digitalWrite (Led3Pin, false);
+            vTaskSuspendAll ();
           }
       }
   }
