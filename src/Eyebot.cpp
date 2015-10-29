@@ -1,5 +1,6 @@
 #include "arduino.h"
 #include "battery.h"
+#include "currentlimit.h"
 #include "definitions.h"
 #include "display.h"
 #include "encoders.h"

@@ -21,6 +21,9 @@ namespace BFH
     const int Encoder2APin = 2;
     const int Encoder2BPin = 3;
 
+    const int CurrentSense1Pin = 4;
+    const int CurrentSense2Pin = 3;
+
 
     /* User interface  */
     const int Button1Pin = 24;
