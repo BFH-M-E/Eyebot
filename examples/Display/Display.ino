@@ -3,37 +3,19 @@
 void
 setup ()
   {
+    Serial.begin(9600);
     Eyebot.Init (RobotColor::Red);
-  }
-
+    Eyebot.SetLineSensorState(1);
+}
 void
 loop ()
   {
-    Serial.print (Eyebot.IsTask1Enabled ());
-    Serial.print ("   ");
+  Serial.print(Eyebot.GetLineSensor (1));
+  Serial.print("  ");
+  Serial.print(Eyebot.GetLineSensor (2));
+  Serial.print("  ");
+  Serial.print(Eyebot.GetLineSensor (3));
+  Serial.print("  ");
+  Serial.println(Eyebot.GetLineSensor (4));
 
-    Serial.print (Eyebot.IsTask2Enabled ());
-    Serial.print ("   ");
-
-    Serial.print (Eyebot.IsTask3Enabled ());
-    Serial.print ("   ");
-
-    Serial.print (Eyebot.IsTask4Enabled ());
-    Serial.println ();
-
-    for (int i = 1; i < 5; ++i)
-      {
-        Serial.print (Eyebot.GetButtonPresses (3, i));
-        Serial.print (" ");
-      }
-
-    for (int i = 1; i < 5; ++i)
-      {
-        Serial.print (Eyebot.GetButtonPresses (4, i));
-        Serial.print (" ");
-      }
-
-    Serial.println ();
-
-    Serial.println (Eyebot.GetCurrentForm ());
-  }
+}

@@ -250,8 +250,8 @@ void
 SetTailWheelAngle (int AngleInDegree)
   {
     /* Limit parameter to legal range  */
-    if (AngleInDegree > 30)  AngleInDegree = 30;
-    if (AngleInDegree < -30) AngleInDegree = -30;
+    if (AngleInDegree > 40)  AngleInDegree = 40;
+    if (AngleInDegree < -40) AngleInDegree = -40;
 
     /* Save angle for later use in the electrical differential  */
     TailServoAngle = AngleInDegree;
