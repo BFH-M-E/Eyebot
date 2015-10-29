@@ -94,11 +94,15 @@ namespace BFH
       {
         while (1)
           {
+            bool srfPresent = false;
+
             for (int i = 0; i < MaxNumberOfSrfs; ++i)
               {
                 /* If current srf slot is empty: continue  */
                 if (!srf[i])
                   continue;
+
+                srfPresent = true;
 
                 /* Start measurement  */
                 srf[i]->StartMeasurement ();
@@ -109,6 +113,12 @@ namespace BFH
                 /* Receive srf data  */
                 srfData[i] = srf[i]->GetData ();
               }
+
+            /* If there is no srf present (and therefore no time has passed
+               waiting for the sonic signal to return), wait some time to let
+               lower priority tasks some time to execute  */
+            if (!srfPresent)
+              vTaskDelay (100);
           }
       }
 

@@ -29,19 +29,22 @@ namespace BFH
            as usual - except that the loop funciton is controlled by the
            RTOS kernel  */
         while (1)
-          ::loop ();
+          {
+            ::loop ();
+            vTaskDelay (1);
+          }
       }
 
     void
     InitRtos ()
       {
-        if (xTaskCreate (BlinkyTask, NULL, 256, NULL, 2, NULL) != pdPASS)
+        if (xTaskCreate (BlinkyTask, NULL, 256, NULL, 1, NULL) != pdPASS)
           {
             Serial.println (F ("ERROR: TaskCreate: BlinkyTask"));
             while (1);
           }
 
-        if (xTaskCreate (LoopUserTask, NULL, 1024, NULL, 1, NULL) != pdPASS)
+        if (xTaskCreate (LoopUserTask, NULL, 1024, NULL, 2, NULL) != pdPASS)
           {
             Serial.println (F ("ERROR: TaskCreate: (user)LoopUserTask"));
             while (1);

@@ -41,6 +41,7 @@ namespace BFH
         InitPropulsion ();
         InitSrf ();
 
+        /* Start the kernel (this function does not return)  */
         InitRtos ();
       }
 

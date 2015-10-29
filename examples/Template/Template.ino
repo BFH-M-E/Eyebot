@@ -3,12 +3,31 @@
 void
 setup ()
   {
-    /* Initialize Eyebot  */
+    /* Benutzercode ab hier einfügen  */
+
+    // ...
+    // ...
+    // ...
+
+
+    /* Als letztes: Eyebot initialisieren  */
     Eyebot.Init (RobotColor::Blue);
+
+    /* Code nach Eyebot.Init () wird nicht ausgeführt!  */
   }
 
 void
 loop ()
   {
+    /* Verwenden Sie die Funktion "vTaskDelay ()" anstelle der Funktion
+       "delay ()"!  */
+
+    /* Benutzercode ab hier einfügen  */
+
+    // ...
+    // ...
+    // ...
+    // vTaskDelay (100);  // 100 ms warten
+    // ...
 
   }
