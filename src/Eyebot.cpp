@@ -245,7 +245,13 @@ namespace BFH
       }
 
     void
-    Eyebot::SetForwardSpeed (float Speed)
+    Eyebot::SetSpeed (int Speed)
+      {
+        ::SetForwardSpeed (Speed / 100.0f);
+      }
+
+    void
+    Eyebot::SetSpeed (float Speed)
       {
         ::SetForwardSpeed (Speed);
       }

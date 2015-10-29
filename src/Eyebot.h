@@ -73,7 +73,8 @@ namespace BFH
 
         void SetMotorState (bool State);
 
-        void SetForwardSpeed (float Speed);
+        void SetSpeed (int Speed);
+        void SetSpeed (float Speed);
         void SetTailWheelAngle (int AngleInDegree);
 
         float GetEncoderValueLeft ();

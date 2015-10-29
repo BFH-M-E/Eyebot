@@ -169,7 +169,7 @@ void FollowBlock(int trackedBlock)
   int forwardSpeed = constrain(400 - (size / 256), -100, 400);
 
   // And set the motor speed
-  Eyebot.SetForwardSpeed(0.1);
+  Eyebot.SetSpeed(0.1);
   //Eyebot.SetTailWheelAngle(panLoop.m_pos);
 }
 

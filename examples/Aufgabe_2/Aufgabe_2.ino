@@ -23,7 +23,7 @@ void DriveStraitDistance(float speed, float distance) {
   Eyebot.Stop();
   Eyebot.SetTailWheelAngle(0);
   float DrivenDistance = GetDrivenDistance();
-  Eyebot.SetForwardSpeed (speed);
+  Eyebot.SetSpeed (speed);
   // forward
   if (speed > 0) {
     while (GetDrivenDistance() < DrivenDistance  + distance) {
@@ -57,7 +57,7 @@ void DriveRightAngle(float speed, int angle) {
   int OldDeltaS = abs(LeftTicks - RightTicks);
   int DeltaS = 0;
 
-  Eyebot.SetForwardSpeed(speed);
+  Eyebot.SetSpeed(speed);
   do {
     LeftTicks = GetEncoderTicksLeft();
     RightTicks = GetEncoderTicksRight();

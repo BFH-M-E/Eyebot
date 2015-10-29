@@ -9,7 +9,7 @@ setup ()
 void
 loop ()
   {
-    Eyebot.SetForwardSpeed (0.3);
+    Eyebot.SetSpeed (10);
 
     Eyebot.SetLed (Led1, true);
     Eyebot.SetLineSensorState (true);
