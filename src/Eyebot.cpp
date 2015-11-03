@@ -37,10 +37,16 @@ namespace BFH
         /* Sensors  */
         pinMode (LineSensorEnablePin, OUTPUT);
 
-        Battery::Init ();
+        /* Initialize some modules as long as power is disabled  */
         Currentlimit::Init ();
-        Display::Init ();
         InitPropulsion ();
+
+        /* Enable 5 V power lane  */
+        SetTracoState (true);
+
+        /* Initialize some modules as soon as power is enabled  */
+        Display::Init ();
+        Battery::Init ();
         InitSrf ();
 
         /* Start the kernel (this function does not return)  */

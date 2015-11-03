@@ -140,8 +140,6 @@ InitPropulsion ()
 
     TailWheelServo.attach (TailWheelServoPin);
     SetTailWheelAngle (0);
-
-    ::Eyebot.SetTracoState (true);
   }
 
 void

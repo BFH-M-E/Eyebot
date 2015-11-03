@@ -95,11 +95,11 @@ namespace BFH
         void
         EmergencyShutdown ()
           {
+            noInterrupts ();
             digitalWrite (TracoEnablePin, false);
             digitalWrite (Led1Pin, true);
             digitalWrite (Led2Pin, false);
             digitalWrite (Led3Pin, false);
-            vTaskSuspendAll ();
           }
       }
   }
