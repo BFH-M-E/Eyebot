@@ -2,6 +2,7 @@
 #include "battery.h"
 #include "display.h"
 #include "definitions.h"
+#include "interruptlock.h"
 
 #include "FreeRTOS/FreeRTOS_AVR.h"
 
@@ -79,7 +80,7 @@ namespace BFH
         void
         Init ()
           {
-            if (xTaskCreate (BatteryCheckTask, NULL, 512, NULL, 2, NULL) != pdPASS)
+            if (xTaskCreate (BatteryCheckTask, NULL, 512, NULL, 3, NULL) != pdPASS)
               {
                 Serial.println (F ("ERROR: TaskCreate: BatteryCheckTask"));
                 while (1);
@@ -95,11 +96,14 @@ namespace BFH
         void
         EmergencyShutdown ()
           {
-            noInterrupts ();
+            InterruptLock lock;
+
             digitalWrite (TracoEnablePin, false);
             digitalWrite (Led1Pin, true);
             digitalWrite (Led2Pin, false);
             digitalWrite (Led3Pin, false);
+
+            while (1);
           }
       }
   }

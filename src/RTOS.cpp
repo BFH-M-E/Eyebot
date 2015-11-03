@@ -1,6 +1,7 @@
 #include "FreeRTOS/FreeRTOS_AVR.h"
 #include "arduino.h"
 #include "definitions.h"
+#include "watchdog.h"
 
 namespace BFH
   {
@@ -36,6 +37,23 @@ namespace BFH
       }
 
     void
+    ResetTask (void* param)
+      {
+        while (1)
+          {
+            if (digitalRead (26))
+              {
+                InterruptLock lock;
+                Watchdog::SetTimeout (Watchdog::MS_16);
+                Watchdog::Enable ();
+                while (1);
+              }
+
+            vTaskDelay (100);
+          }
+      }
+
+    void
     InitRtos ()
       {
         if (xTaskCreate (BlinkyTask, NULL, 256, NULL, 1, NULL) != pdPASS)
@@ -47,6 +65,12 @@ namespace BFH
         if (xTaskCreate (LoopUserTask, NULL, 1024, NULL, 2, NULL) != pdPASS)
           {
             Serial.println (F ("ERROR: TaskCreate: (user)LoopUserTask"));
+            while (1);
+          }
+
+        if (xTaskCreate (ResetTask, NULL, 1024, NULL, 3, NULL) != pdPASS)
+          {
+            Serial.println (F ("ERROR: TaskCreate: ResetTask"));
             while (1);
           }
 
