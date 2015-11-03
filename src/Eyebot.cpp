@@ -269,6 +269,12 @@ namespace BFH
       }
 
     float
+    Eyebot::GetDrivenDistance ()
+      {
+        return GetEncoderDistance ();
+      }
+
+    float
     Eyebot::GetEncoderValueLeft ()
       {
         /* NOTE: should be refactored  */

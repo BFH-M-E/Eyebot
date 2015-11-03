@@ -70,7 +70,7 @@ GetEncoderTicksRight ()
   }
 
 float
-GetDrivenDistance ()
+GetEncoderDistance ()
   {
     long ticksLeft  = GetEncoderTicksLeft ();
     long ticksRight = GetEncoderTicksRight ();

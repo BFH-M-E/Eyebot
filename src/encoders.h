@@ -5,7 +5,7 @@ void InitEncoders ();
 
 void ResetEncoders ();
 
-float GetDrivenDistance ();
+float GetEncoderDistance ();
 
 long GetEncoderTicksLeft ();
 long GetEncoderTicksRight ();

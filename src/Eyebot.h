@@ -68,7 +68,6 @@ namespace BFH
         bool IsTask4Enabled ();
         int GetButtonPresses (int Form, int Button);
 
-
         void Stop ();
 
         void SetMotorState (bool State);
@@ -77,6 +76,7 @@ namespace BFH
         void SetSpeed (float Speed);
         void SetTailWheelAngle (int AngleInDegree);
 
+        float GetDrivenDistance ();
         float GetEncoderValueLeft ();
         float GetEncoderValueRight ();
 
