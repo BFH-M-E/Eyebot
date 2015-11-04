@@ -1,8 +1,16 @@
+#ifndef INTERRUPTLOCK_H
+#define INTERRUPTLOCK_H
+
 #include <avr/interrupt.h>
 
-class InterruptLock
+namespace BFH
   {
-  public:
-    InterruptLock ()  { cli(); }
-    ~InterruptLock () { sei (); }
-  };
+    class InterruptLock
+      {
+      public:
+        InterruptLock ()  { cli(); }
+        ~InterruptLock () { sei (); }
+      };
+  }
+
+  #endif /* end of include guard: INTERRUPTLOCK_H */

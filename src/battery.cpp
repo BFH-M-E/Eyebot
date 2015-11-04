@@ -3,6 +3,7 @@
 #include "display.h"
 #include "definitions.h"
 #include "interruptlock.h"
+#include "watchdog.h"
 
 #include "FreeRTOS/FreeRTOS_AVR.h"
 
@@ -98,6 +99,7 @@ namespace BFH
           {
             InterruptLock lock;
 
+            /* Indicate shutdown via led and disable 5 V power  */
             digitalWrite (TracoEnablePin, false);
             digitalWrite (Led1Pin, true);
             digitalWrite (Led2Pin, false);

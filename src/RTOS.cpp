@@ -41,13 +41,8 @@ namespace BFH
       {
         while (1)
           {
-            if (digitalRead (26))
-              {
-                InterruptLock lock;
-                Watchdog::SetTimeout (Watchdog::MS_16);
-                Watchdog::Enable ();
-                while (1);
-              }
+            if (digitalRead (Button3Pin))
+              Watchdog::TriggerSoftReset ();
 
             vTaskDelay (100);
           }
