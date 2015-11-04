@@ -51,7 +51,7 @@ namespace BFH
         /* Begin measurement, data are available approximately 70 ms later  */
         Wire.beginTransmission (_Address);
         Wire.write (0x00);  /* COMMAND register  */
-        Wire.write (0x51);  /* Start ranging (see SRF08 datasheet)  */
+        Wire.write (0x52);  /* Start ranging in uS (see SRF08 datasheet)  */
         Wire.endTransmission ();
       }
 
@@ -72,9 +72,12 @@ namespace BFH
             distance = static_cast<int> (Wire.read ()) << 8;
             distance |= static_cast<int> (Wire.read ());
 
+            /* calculate distance with c = 343m/s => 0.343mm/uS */
+            distance *= 0.1715f;
+
             /* Limit range of valid data  */
-            if (distance < 5)    distance = 5;
-            if (distance > 100)  distance = 100;
+            if (distance < 50)    distance = 50;
+            if (distance > 1000)  distance = 1000;
           }
         else
           {
