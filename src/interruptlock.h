@@ -13,4 +13,4 @@ namespace BFH
       };
   }
 
-  #endif /* end of include guard: INTERRUPTLOCK_H */
+#endif /* end of include guard: INTERRUPTLOCK_H */
