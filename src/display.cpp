@@ -1,6 +1,7 @@
 #include "arduino.h"
 #include "definitions.h"
 #include "display.h"
+#include "rtoslock.h"
 
 #include "genieArduino/genieArduino.h"
 #include "FreeRTOS/FreeRTOS_AVR.h"
@@ -14,6 +15,10 @@ namespace BFH
             /* How many forms do exist?  */
             const int NumberOfForms = 6;
             int CurrentForm = 0;
+
+            /* How many strings do exist?  */
+            const int NumberOfStrings = 18;
+            int StringValue[NumberOfStrings] = {};
 
             /* "State" - variables:
                There is a number of variables that can all contain either true
@@ -97,6 +102,7 @@ namespace BFH
         /* Forward declaration  */
         void DisplayEventHandler ();
         void DisplayTask (void* param);
+        void DisplayStringTask (void* param);
 
         void
         Init ()
@@ -123,6 +129,13 @@ namespace BFH
                 Serial.println (F ("ERROR: TaskCreate: DisplayTask"));
                 while (1);
               }
+
+            /* Init string task  */
+            if (xTaskCreate (DisplayStringTask, NULL, 1024, NULL, 2, NULL) != pdPASS)
+              {
+                Serial.println (F ("ERROR: TaskCreate: DisplayStringTask"));
+                while (1);
+              }
           }
 
         void
@@ -147,6 +160,26 @@ namespace BFH
 
                 /* Sampling the events at 200 Hz should be enough  */
                 vTaskDelay (5);
+              }
+          }
+
+        void
+        DisplayStringTask (void* param)
+          {
+            while (!IsInitialized)
+              vTaskDelay (100);
+
+            while (1)
+              {
+                for (int i = 0; i < NumberOfStrings; ++i)
+                  {
+                    {
+                      RtosLock lock;
+                      genie.WriteStr (i, StringValue[i]);
+                    }
+
+                    vTaskDelay (50);
+                  }
               }
           }
 
@@ -213,7 +246,7 @@ namespace BFH
             if (Form < 0 || Form > NumberOfForms)
               return;
 
-            genie.WriteObject (GENIE_OBJ_FORM, Form, 0);
+            // genie.WriteObject (GENIE_OBJ_FORM, Form, 0);
 
             CurrentForm = Form;
           }
@@ -238,9 +271,10 @@ namespace BFH
                 /* Give the TX buffer some time to become free  */
                 vTaskDelay (5);
 
-                vTaskSuspendAll ();
-                genie.WriteObject (GENIE_OBJ_TANK, i, Percentage);
-                xTaskResumeAll ();
+                {
+                  RtosLock lock;
+                  genie.WriteObject (GENIE_OBJ_TANK, i, Percentage);
+                }
               }
 
             for (int i = 0; i < NumberOfBatteryStrings; ++i)
@@ -248,10 +282,20 @@ namespace BFH
                 /* Give the TX buffer some time to become free  */
                 vTaskDelay (5);
 
-                vTaskSuspendAll ();
-                genie.WriteStr (BatteryString[i], Percentage);
-                xTaskResumeAll ();
+                {
+                  RtosLock lock;
+                  StringValue[BatteryString[i]] = Percentage;
+                }
               }
+          }
+
+        void
+        SetString (int Identifier, int Value)
+          {
+            if (Identifier < 0 || Identifier > NumberOfStrings)
+              return;
+
+            StringValue[Identifier] = Value;
           }
 
         bool

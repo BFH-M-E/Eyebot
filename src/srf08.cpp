@@ -128,8 +128,8 @@ namespace BFH
     void
     InitSrf ()
       {
-        srf[0] = new Srf08 (0xE0);
-        srf[1] = new Srf08 (0xE2);
+        srf[0] = new Srf08 (0xE2);
+        srf[1] = new Srf08 (0xE0);
         srf[2] = new Srf08 (0xE4);
         srf[3] = new Srf08 (0xE6);
 

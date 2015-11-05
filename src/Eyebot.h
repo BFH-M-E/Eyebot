@@ -67,6 +67,8 @@ namespace BFH
         bool IsTask3Enabled ();
         bool IsTask4Enabled ();
         int GetButtonPresses (int Form, int Button);
+        void SetDisplayString (int Identifier, int Value);
+        void SetDisplayString (int Identifier, float Value);
 
         void Stop ();
 

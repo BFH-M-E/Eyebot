@@ -1,6 +1,8 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
+#include <stdint.h>
+
 namespace BFH
   {
     namespace Display
@@ -194,6 +196,8 @@ namespace BFH
         int GetCurrentForm ();
 
         void ShowBatteryLevel (int Percentage);
+
+        void SetString (int Identifier, int Value);
 
         bool GetSoftSwitchState (int Task);
         int GetButtonPresses (int Button);

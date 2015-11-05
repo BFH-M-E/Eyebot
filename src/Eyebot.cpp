@@ -236,6 +236,18 @@ namespace BFH
       }
 
     void
+    Eyebot::SetDisplayString (int Identifier, int Value)
+      {
+        Display::SetString (Identifier, Value);
+      }
+
+    void
+    Eyebot::SetDisplayString (int Identifier, float Value)
+      {
+        Display::SetString (Identifier, Value);
+      }
+
+    void
     Eyebot::Stop ()
       {
         ::Stop ();
