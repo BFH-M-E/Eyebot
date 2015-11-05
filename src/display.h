@@ -55,6 +55,10 @@ namespace BFH
             enum
               {
                 StrBattery = 1,
+                StrL = 2,
+                StrR = 3,
+                StrX = 4,
+                StrY = 5,
               };
 
             /* Battery container "Tank"  */
@@ -105,6 +109,10 @@ namespace BFH
             enum
               {
                 StrBattery = 7,
+                StrUser1 = 10,
+                StrUser2 = 11,
+                StrUser3 = 8,
+                StrUser4 = 9,
               };
 
             /* Battery container "Tank"  */
@@ -132,6 +140,10 @@ namespace BFH
             enum
               {
                 StrBattery = 12,
+                StrUser1 = 13,
+                StrUser2 = 14,
+                StrUser3 = 15,
+                StrUser4 = 16,
               };
 
             /* Battery container "Tank"  */
