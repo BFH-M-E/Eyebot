@@ -16,10 +16,8 @@ namespace BFH
     float BatteryVoltage = 0.0f;
 
     void
-    Eyebot::Init (int Color)
+    Eyebot::Init ()
       {
-        this->Color = Color;
-
         Serial.begin (9600);
         Wire.begin ();
 
@@ -237,12 +235,6 @@ namespace BFH
 
     void
     Eyebot::SetDisplayString (int Identifier, int Value)
-      {
-        Display::SetString (Identifier, Value);
-      }
-
-    void
-    Eyebot::SetDisplayString (int Identifier, float Value)
       {
         Display::SetString (Identifier, Value);
       }

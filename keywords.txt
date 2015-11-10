@@ -1,5 +1,5 @@
 #######################################
-# Syntax Coloring for Hourglass Lib
+# Syntax Coloring for Eyebot Lib
 #######################################
 
 #######################################
@@ -10,10 +10,49 @@
 # Methods and Functions (KEYWORD2)
 #######################################
 
+Init	KEYWORD2
+SetLed	KEYWORD2
+SetTracoState	KEYWORD2
+SetLineSensorState	KEYWORD2
+GetButton	KEYWORD2
+GetLineSensor	KEYWORD2
+GetBatteryVoltage	KEYWORD2
+GetSrfLeftValue	KEYWORD2
+GetSrfRightValue	KEYWORD2
+GetSrfSideValue	KEYWORD2
+GetSrfBackValue	KEYWORD2
+GetCurrentForm	KEYWORD2
+IsTask1Enabled	KEYWORD2
+IsTask2Enabled	KEYWORD2
+IsTask3Enabled	KEYWORD2
+IsTask4Enabled	KEYWORD2
+GetButtonPresses	KEYWORD2
+SetDisplayString	KEYWORD2
+Stop	KEYWORD2
+SetMotorState	KEYWORD2
+SetSpeed	KEYWORD2
+SetTailWheelAngle	KEYWORD2
+GetDrivenDistance	KEYWORD2
+GetEncoderValueLeft	KEYWORD2
+GetEncoderValueRight	KEYWORD2
+
 #######################################
 # Instances (KEYWORD2)
 #######################################
 
+Eyebot	KEYWORD2
+
 #######################################
 # Constants (LITERAL1)
 #######################################
+
+Led1	LITERAL1
+Led2	LITERAL1
+Led3	LITERAL1
+Button1	LITERAL1
+Button2	LITERAL1
+Button3	LITERAL1
+LineSensor1	LITERAL1
+LineSensor2	LITERAL1
+LineSensor3	LITERAL1
+LineSensor4	LITERAL1

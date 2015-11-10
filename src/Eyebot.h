@@ -44,7 +44,7 @@ namespace BFH
     class Eyebot
       {
       public:
-        void Init (int Color);
+        void Init ();
 
         void SetLed (int Led, bool State);
         void SetLed (int Led, int Value);
@@ -68,7 +68,6 @@ namespace BFH
         bool IsTask4Enabled ();
         int GetButtonPresses (int Form, int Button);
         void SetDisplayString (int Identifier, int Value);
-        void SetDisplayString (int Identifier, float Value);
 
         void Stop ();
 
@@ -81,8 +80,6 @@ namespace BFH
         float GetDrivenDistance ();
         float GetEncoderValueLeft ();
         float GetEncoderValueRight ();
-
-        int Color;
       };
   }
 

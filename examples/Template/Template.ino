@@ -11,7 +11,7 @@ setup ()
 
 
     /* Als letztes: Eyebot initialisieren  */
-    Eyebot.Init (RobotColor::Blue);
+    Eyebot.Init ();
 
     /* Code nach Eyebot.Init () wird nicht ausgeführt!  */
   }
