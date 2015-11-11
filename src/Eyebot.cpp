@@ -39,6 +39,9 @@ namespace BFH
         Currentlimit::Init ();
         InitPropulsion ();
 
+        /* Disable motors  */
+        SetMotorState (false);
+
         /* Enable 5 V power lane  */
         SetTracoState (true);
 
