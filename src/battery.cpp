@@ -25,18 +25,24 @@ namespace BFH
         void
         BatteryCheckTask (void* param)
           {
+            /* Wait some time to avoid the "blue robot bug" that caused the
+               system to instantly emergency shutdown after power up  */
+            vTaskDelay (5000);
+
             while (1)
               {
                 /* Read battery voltage value  */
                 int batteryValue = analogRead (BatteryPin);
 
-                /* The voltage reference is made by the Arduino MEGA board's 5 V voltage
-                   regulator. Therefore, we can assume 5.0 V as reference  */
+                /* The voltage reference is made by the Arduino MEGA board's
+                   5 V voltage regulator. Therefore, we can assume 5.0 V as
+                   reference  */
                 float analogVoltage = batteryValue * 5.0f / 1023.0f;
 
-                /* Conversion factor to trim the voltage divider (there should be no need
-                   to change this value, as long as 1 % resistors are used, as they produce a
-                   total error of less than 1.5 %)  */
+                /* Conversion factor to trim the voltage divider (there should
+                   be no need to change this value, as long as 1 % resistors
+                   are used, as they produce a total error of less than
+                   1.5 %)  */
                 float newBatteryVoltage = analogVoltage / 0.3125f;
 
                 static float BatteryVoltage = newBatteryVoltage;
