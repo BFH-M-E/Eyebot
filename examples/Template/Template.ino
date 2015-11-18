@@ -1,7 +1,6 @@
 #include "Eyebot.h"
 
-void
-setup ()
+void setup ()
   {
     /* Benutzercode ab hier einfügen  */
 
@@ -16,8 +15,7 @@ setup ()
     /* Code nach Eyebot.Init () wird nicht ausgeführt!  */
   }
 
-void
-loop ()
+void loop ()
   {
     /* Verwenden Sie die Funktion "vTaskDelay ()" anstelle der Funktion
        "delay ()"!  */
