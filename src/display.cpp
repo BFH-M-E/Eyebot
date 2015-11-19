@@ -124,14 +124,14 @@ namespace BFH
             InitStartetAt = millis ();
 
             /* Init display task  */
-            if (xTaskCreate (DisplayTask, NULL, 1024, NULL, 2, NULL) != pdPASS)
+            if (xTaskCreate (DisplayTask, NULL, 512, NULL, 2, NULL) != pdPASS)
               {
                 Serial.println (F ("ERROR: TaskCreate: DisplayTask"));
                 while (1);
               }
 
             /* Init string task  */
-            if (xTaskCreate (DisplayStringTask, NULL, 1024, NULL, 2, NULL) != pdPASS)
+            if (xTaskCreate (DisplayStringTask, NULL, 512, NULL, 2, NULL) != pdPASS)
               {
                 Serial.println (F ("ERROR: TaskCreate: DisplayStringTask"));
                 while (1);

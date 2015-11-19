@@ -50,6 +50,9 @@ namespace BFH
         Battery::Init ();
         InitSrf ();
 
+        /* Give the serial interface some time to print errors (if any)  */
+        delay (200);
+
         /* Start the kernel (this function does not return)  */
         InitRtos ();
       }

@@ -51,7 +51,7 @@ namespace BFH
     void
     InitRtos ()
       {
-        if (xTaskCreate (BlinkyTask, NULL, 256, NULL, 1, NULL) != pdPASS)
+        if (xTaskCreate (BlinkyTask, NULL, 128, NULL, 1, NULL) != pdPASS)
           {
             Serial.println (F ("ERROR: TaskCreate: BlinkyTask"));
             while (1);
@@ -63,7 +63,7 @@ namespace BFH
             while (1);
           }
 
-        if (xTaskCreate (ResetTask, NULL, 1024, NULL, 3, NULL) != pdPASS)
+        if (xTaskCreate (ResetTask, NULL, 128, NULL, 3, NULL) != pdPASS)
           {
             Serial.println (F ("ERROR: TaskCreate: ResetTask"));
             while (1);

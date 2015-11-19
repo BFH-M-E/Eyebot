@@ -87,7 +87,7 @@ namespace BFH
         void
         Init ()
           {
-            if (xTaskCreate (BatteryCheckTask, NULL, 512, NULL, 3, NULL) != pdPASS)
+            if (xTaskCreate (BatteryCheckTask, NULL, 256, NULL, 3, NULL) != pdPASS)
               {
                 Serial.println (F ("ERROR: TaskCreate: BatteryCheckTask"));
                 while (1);

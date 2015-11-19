@@ -92,8 +92,8 @@
 #define configTICK_RATE_HZ			( ( TickType_t ) 1000 )
 #endif  // WHG
 #define configMAX_PRIORITIES		( 4 )
-#define configMINIMAL_STACK_SIZE	( ( unsigned short ) 100 )
-#define configTOTAL_HEAP_SIZE		( (size_t ) ( 256 ) )  // WHG type 3 heap
+#define configMINIMAL_STACK_SIZE	( ( unsigned short ) 256 )
+#define configTOTAL_HEAP_SIZE		( (size_t ) ( 4096 ) )  // WHG type 3 heap
 #define configMAX_TASK_NAME_LEN		( 8 )
 #define configUSE_TRACE_FACILITY	0
 #define configUSE_16_BIT_TICKS		1
