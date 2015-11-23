@@ -35,6 +35,10 @@ SetTailWheelAngle	KEYWORD2
 GetDrivenDistance	KEYWORD2
 GetEncoderValueLeft	KEYWORD2
 GetEncoderValueRight	KEYWORD2
+PS4JoystickLeftX	KEYWORD2
+PS4JoystickLeftY	KEYWORD2
+PS4JoystickRightX	KEYWORD2
+PS4JoystickRightY	KEYWORD2
 
 #######################################
 # Instances (KEYWORD2)

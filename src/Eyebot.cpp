@@ -8,6 +8,8 @@
 #include "propulsion.h"
 #include "srf08.h"
 #include "inline/Wire/Wire.h"
+#include "inline/SPI/SPI.h"
+#include "ps4.h"
 
 #include "Eyebot.h"
 #include "RTOS.h"
@@ -51,6 +53,10 @@ namespace BFH
         Battery::Init ();
         Grabber::Init ();
         InitSrf ();
+
+        #ifdef ARDUINO_AVR_ADK
+        PS4::Init ();
+        #endif
 
         /* Give the serial interface some time to print errors (if any)  */
         delay (200);
@@ -319,6 +325,31 @@ namespace BFH
       {
         Grabber::SetGrabAngle (Angle);
       }
+      
+    int
+    Eyebot::PS4JoystickLeftX()
+    {
+      return PS4::GetJoystickLeftX();
+    }
+
+    int
+    Eyebot::PS4JoystickLeftY()
+    {
+      return PS4::GetJoystickLeftY();
+    }
+
+    int
+    Eyebot::PS4JoystickRightX()
+    {
+      return PS4::GetJoystickRightX();
+    }
+
+    int
+    Eyebot::PS4JoystickRightY()
+    {
+      return PS4::GetJoystickRightY();
+    }
+
   }
 
 BFH::Eyebot Eyebot;

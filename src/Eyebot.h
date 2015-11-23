@@ -84,6 +84,11 @@ namespace BFH
         /* "Greifer Plugin"  */
         void SetGrabberLiftAngle (int Angle);
         void SetGrabberGrabAngle (int Angle);
+
+		int PS4JoystickLeftX();
+        int PS4JoystickLeftY();
+        int PS4JoystickRightX();
+        int PS4JoystickRightY();
       };
   }
 

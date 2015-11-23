@@ -54,6 +54,8 @@ namespace BFH
 
     /* Display  */
     const int DisplayResetPin = 10;
+
+    
   }
 
 #endif /* end of include guard: DEFINITIONS_H */
