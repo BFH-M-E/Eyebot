@@ -80,6 +80,10 @@ namespace BFH
         float GetDrivenDistance ();
         float GetEncoderValueLeft ();
         float GetEncoderValueRight ();
+
+        /* "Greifer Plugin"  */
+        void SetGrabberLiftAngle (int Angle);
+        void SetGrabberGrabAngle (int Angle);
       };
   }
 

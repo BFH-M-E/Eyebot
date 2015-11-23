@@ -4,6 +4,7 @@
 #include "definitions.h"
 #include "display.h"
 #include "encoders.h"
+#include "grabber.h"
 #include "propulsion.h"
 #include "srf08.h"
 #include "inline/Wire/Wire.h"
@@ -48,6 +49,7 @@ namespace BFH
         /* Initialize some modules as soon as power is enabled  */
         Display::Init ();
         Battery::Init ();
+        Grabber::Init ();
         InitSrf ();
 
         /* Give the serial interface some time to print errors (if any)  */
@@ -304,6 +306,18 @@ namespace BFH
         float distance = GetEncoderTicksRight () / 3400.0f;
 
         return distance;
+      }
+
+    void
+    Eyebot::SetGrabberLiftAngle (int Angle)
+      {
+        Grabber::SetLiftAngle (Angle);
+      }
+
+    void
+    Eyebot::SetGrabberGrabAngle (int Angle)
+      {
+        Grabber::SetGrabAngle (Angle);
       }
   }
 
