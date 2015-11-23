@@ -8,8 +8,8 @@ namespace BFH
       {
         namespace
           {
-            int LiftAngle = 90;
-            int GrabAngle = 90;
+            int LiftAngle = 55;
+            int GrabAngle = 45;
           }
 
         void
