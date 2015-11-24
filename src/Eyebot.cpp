@@ -8,7 +8,11 @@
 #include "propulsion.h"
 #include "srf08.h"
 #include "inline/Wire/Wire.h"
-#include "inline/SPI/SPI.h"
+
+#ifdef ARDUINO_AVR_ADK
+  #include "SPI.h"
+#endif
+
 #include "ps4.h"
 
 #include "Eyebot.h"
@@ -325,7 +329,7 @@ namespace BFH
       {
         Grabber::SetGrabAngle (Angle);
       }
-      
+
     int
     Eyebot::PS4JoystickLeftX()
     {

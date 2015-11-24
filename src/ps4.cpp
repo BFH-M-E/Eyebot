@@ -1,7 +1,9 @@
 #include "arduino.h"
-#include "inline/SPI/SPI.h"
 #include "inline/USB/PS4BT.h"
 
+#ifdef ARDUINO_AVR_ADK
+  #include "SPI.h"
+#endif
 
 #include "FreeRTOS/FreeRTOS_AVR.h"
 
