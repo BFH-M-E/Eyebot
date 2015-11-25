@@ -11,9 +11,8 @@
 
 #ifdef ARDUINO_AVR_ADK
   #include "SPI.h"
+  #include "ps4.h"
 #endif
-
-#include "ps4.h"
 
 #include "Eyebot.h"
 #include "RTOS.h"
@@ -330,30 +329,31 @@ namespace BFH
         Grabber::SetGrabAngle (Angle);
       }
 
-    int
-    Eyebot::PS4JoystickLeftX()
-    {
-      return PS4::GetJoystickLeftX();
-    }
+    #ifdef ARDUINO_AVR_ADK
+        int
+        Eyebot::PS4JoystickLeftX()
+        {
+          return PS4::GetJoystickLeftX();
+        }
 
-    int
-    Eyebot::PS4JoystickLeftY()
-    {
-      return PS4::GetJoystickLeftY();
-    }
+        int
+        Eyebot::PS4JoystickLeftY()
+        {
+          return PS4::GetJoystickLeftY();
+        }
 
-    int
-    Eyebot::PS4JoystickRightX()
-    {
-      return PS4::GetJoystickRightX();
-    }
+        int
+        Eyebot::PS4JoystickRightX()
+        {
+          return PS4::GetJoystickRightX();
+        }
 
-    int
-    Eyebot::PS4JoystickRightY()
-    {
-      return PS4::GetJoystickRightY();
-    }
-
+        int
+        Eyebot::PS4JoystickRightY()
+        {
+          return PS4::GetJoystickRightY();
+        }
+    #endif
   }
 
 BFH::Eyebot Eyebot;
