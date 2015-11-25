@@ -1,4 +1,5 @@
 #include "Eyebot.h"
+#include "SPI.h"
 
 void setup ()
   {
