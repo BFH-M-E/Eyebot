@@ -5,6 +5,7 @@
 #include "display.h"
 #include "encoders.h"
 #include "grabber.h"
+#include "laser.h"
 #include "propulsion.h"
 #include "srf08.h"
 #include "inline/Wire/Wire.h"
@@ -327,6 +328,30 @@ namespace BFH
     Eyebot::SetGrabberGrabAngle (int Angle)
       {
         Grabber::SetGrabAngle (Angle);
+      }
+
+    void
+    Eyebot::SetLaserPanAngle (int Angle)
+      {
+        Laser::SetPanAngle (Angle);
+      }
+
+    void
+    Eyebot::SetLaserTiltAngle (int Angle)
+      {
+        Laser::SetTiltAngle (Angle);
+      }
+
+    void
+    Eyebot::EnableLaser ()
+      {
+        Laser::EnableLaser ();
+      }
+
+    void
+    Eyebot::DisableLaser ()
+      {
+        Laser::DisableLaser ();
       }
 
     #ifdef ARDUINO_AVR_ADK

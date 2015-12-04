@@ -85,6 +85,12 @@ namespace BFH
         void SetGrabberLiftAngle (int Angle);
         void SetGrabberGrabAngle (int Angle);
 
+        /* "Laser Plugin" */
+        void SetLaserPanAngle (int Angle);
+        void SetLaserTiltAngle (int Angle);
+        void EnableLaser ();
+        void DisableLaser ();
+
 		int PS4JoystickLeftX();
         int PS4JoystickLeftY();
         int PS4JoystickRightX();
