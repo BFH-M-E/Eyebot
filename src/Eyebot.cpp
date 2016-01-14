@@ -336,8 +336,20 @@ namespace BFH
         Laser::SetPanAngle (Angle);
       }
 
+      void
+      Eyebot::SetLaserPanAngle (float Angle)
+      {
+        Laser::SetPanAngle (Angle);
+      }
+
     void
     Eyebot::SetLaserTiltAngle (int Angle)
+      {
+        Laser::SetTiltAngle (Angle);
+      }
+      
+    void
+    Eyebot::SetLaserTiltAngle (float Angle)
       {
         Laser::SetTiltAngle (Angle);
       }

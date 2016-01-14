@@ -87,7 +87,9 @@ namespace BFH
 
         /* "Laser Plugin" */
         void SetLaserPanAngle (int Angle);
+        void SetLaserPanAngle (float Angle);
         void SetLaserTiltAngle (int Angle);
+        void SetLaserTiltAngle (float Angle);
         void EnableLaser ();
         void DisableLaser ();
 

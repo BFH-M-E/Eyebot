@@ -8,7 +8,9 @@ namespace BFH
         void Init ();
 
         void SetPanAngle (int Angle);
+        void SetPanAngle (float Angle);
         void SetTiltAngle (int Angle);
+        void SetTiltAngle (float Angle);
         void EnableLaser ();
         void DisableLaser ();
       }
